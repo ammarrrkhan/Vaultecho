@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VaultEcho | Emergency Toolkit</title>
+  <link rel="icon" type="image/png" href="favIcon-copy.png">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    :root {
+      --primary-red: #d62839;
+      --dark-red: #911d2a;
+      --accent-color: #e63946;
+      --pure-black: #000000;
+      --dark-gray: #121212;
+      --medium-gray: #1d1d1d;
+      --light-gray: #2a2a2a;
+      --white: #FFFFFF;
+      --off-white: #f1f1f1;
+      --light-color: #f1faee;
+      --dark-blue: #1d3557;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dark-gray);
+      color: var(--white);
+      padding-top: 140px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .navbar-brand,
+    .footer-column h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      background-color: #2926264b;
+      border-bottom: 2px solid var(--light-gray);
+      height: 120px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(18px);
+      z-index: 1000;
+    }
+
+    .navbar-brand img {
+      height: 90px;
+      width: auto;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      font-size: 1.1rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      position: relative;
+      padding: 1.2rem 0.8rem;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-red);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 1rem;
+      left: 0.8rem;
+      background-color: var(--primary-red);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: calc(100% - 1.6rem);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: var(--medium-gray);
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content a {
+      padding: 12px 16px;
+      display: block;
+      color: var(--off-white);
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--light-gray);
+      color: var(--primary-red);
+    }
+
+    .dropdown-content a::after {
+      display: none;
+    }
+
+    .btn-signal {
+      background-color: var(--primary-red);
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .btn-signal:hover {
+      background-color: var(--dark-red);
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      color: white;
+      font-size: 1.8rem;
+      z-index: 1001;
+    }
+
+    @media (max-width: 992px) {
+      .navbar {
+        height: 120px;
+        padding: 0 15px;
+      }
+
+      .navbar-brand img {
+        height: 100px;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 118px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: var(--dark-gray);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        transition: left 0.3s ease;
+        z-index: 1000;
+        overflow-y: auto;
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .nav-links li {
+        width: 100%;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid var(--medium-gray);
+      }
+
+      .nav-links a {
+        padding: 0.5rem 0;
+      }
+
+      .nav-links a::after {
+        bottom: 0.3rem;
+        left: 0;
+      }
+
+      .dropdown-content {
+        position: static;
+        display: none;
+        width: 100%;
+        box-shadow: none;
+        margin-top: 0.5rem;
+        background-color: var(--medium-gray);
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: none;
+      }
+
+      .dropdown.active .dropdown-content {
+        display: block;
+      }
+
+      .btn-signal {
+        width: 100%;
+        justify-content: center;
+        padding: 10px;
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .navbar-brand img {
+        height: 85px;
+      }
+
+      .hamburger {
+        font-size: 1.6rem;
+      }
+    }
+
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: var(--off-white);
+      margin-bottom: 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 40px 0;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .section-title h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      display: inline-block;
+      position: relative;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      width: 70px;
+      height: 4px;
+      background: var(--primary-red);
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--primary-red);
+      color: var(--white);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: var(--dark-red);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(214, 40, 57, 0.3);
+    }
+
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal-content {
+      background-color: var(--medium-gray);
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      position: relative;
+      animation: modalFadeIn 0.3s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      color: var(--off-white);
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .close-modal:hover {
+      color: var(--primary-red);
+    }
+
+
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('Images/emergency image (1).jpeg') no-repeat center center/cover;
+      min-height: 80vh;
+      margin-top: -20px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      margin-bottom: 30px;
+      color: var(--off-white);
+    }
+
+    .hero .btn {
+      font-size: 1.1rem;
+      padding: 15px 30px;
+    }
+
+
+    .emergency-tools {
+      background-color: var(--medium-gray);
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: 30px;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .flip-card {
+      width: 100%;
+      min-height: 250px;
+      aspect-ratio: 1/1.2;
+      perspective: 1000px;
+      border-radius: 10px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .flip-card-front {
+      background-color: var(--light-gray);
+      color: var(--white);
+    }
+
+    .flip-card-back {
+      background-color: var(--primary-red);
+      color: var(--white);
+      transform: rotateY(180deg);
+    }
+
+    .flip-card i {
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      margin-bottom: 15px;
+      color: var(--primary-red);
+    }
+
+    .flip-card-back i {
+      color: var(--white);
+    }
+
+    .flip-card h3 {
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      margin-bottom: 10px;
+    }
+
+    .flip-card p {
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      margin-bottom: 15px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+
+    .tool-btn {
+      margin-top: 15px;
+      background: var(--white);
+      color: var(--primary-red);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+    }
+
+    .tool-btn:hover {
+      background: var(--off-white);
+    }
+
+    .status-message {
+      font-size: clamp(0.7rem, 2vw, 0.9rem);
+      max-height: 60px;
+      overflow-y: auto;
+      width: 100%;
+      padding: 5px;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+
+    .emergency-guide {
+      background-color: var(--dark-gray);
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .guide-card {
+      background: var(--medium-gray);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .guide-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .guide-img {
+      height: 180px;
+      min-height: 150px;
+      aspect-ratio: 16/9;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .guide-content {
+      padding: 20px;
+    }
+
+    .guide-content h3 {
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .guide-content p {
+      margin-bottom: 15px;
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    }
+
+
+    .emergency-kits {
+      background-color: var(--medium-gray);
+    }
+
+    .kits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .kit-card {
+      background: var(--light-gray);
+      border-radius: 10px;
+      padding: 25px 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .kit-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+      z-index: -1;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .kit-card:hover::before {
+      opacity: 1;
+    }
+
+    .kit-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .kit-card i {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: var(--primary-red);
+      transition: all 0.3s ease;
+    }
+
+    .kit-card:hover i {
+      color: var(--white);
+      transform: scale(1.1);
+    }
+
+    .kit-card h3 {
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .kit-card:hover h3 {
+      color: var(--white);
+    }
+
+    .kit-card p {
+      transition: all 0.3s ease;
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    }
+
+    .kit-card:hover p {
+      color: var(--off-white);
+    }
+
+
+    .daily-tools {
+      background-color: var(--dark-gray);
+    }
+
+    .flashcards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
+      gap: 15px;
+      width: 100%;
+    }
+
+    .flashcard {
+      width: 100%;
+      aspect-ratio: 1/1.4;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flashcard-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+
+    .flashcard:hover .flashcard-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-front,
+    .flashcard-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .flashcard-front {
+      background-color: var(--medium-gray);
+      color: var(--white);
+    }
+
+    .flashcard-back {
+      background-color: var(--primary-red);
+      color: var(--white);
+      transform: rotateY(180deg);
+    }
+
+    .flashcard i {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin-bottom: 10px;
+      color: var(--primary-red);
+    }
+
+    .flashcard-back i {
+      color: var(--white);
+    }
+
+    .flashcard h3 {
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .flashcard p {
+      font-size: clamp(0.75rem, 2vw, 0.85rem);
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }
+
+
+    .pouch-builder {
+      background-color: var(--medium-gray);
+    }
+
+    .pouch-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .pouch-content {
+      width: 100%;
+    }
+
+    .pouch-image {
+      width: 100%;
+      height: 300px;
+      aspect-ratio: 1/1;
+      background: url('Images/aidkit.jpeg') no-repeat center center/cover;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      order: -1;
+    }
+
+    .pouch-form {
+      margin-top: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      background: var(--light-gray);
+      border: 1px solid var(--light-gray);
+      border-radius: 4px;
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary-red);
+    }
+
+    #addItemBtn {
+      width: 100%;
+      padding: 12px;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    .item-list {
+      margin-top: 25px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .item-list ul {
+      list-style: none;
+    }
+
+    .item-list li {
+      padding: 10px;
+      background: var(--light-gray);
+      margin-bottom: 5px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+    }
+
+    .item-list li button {
+      background: var(--primary-red);
+      color: var(--white);
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+
+    .survival-tips {
+      background-color: var(--dark-gray);
+    }
+
+    .tips-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .tip-card {
+      background: var(--medium-gray);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tip-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(214, 40, 57, 0.1) 0%, rgba(145, 29, 42, 0.2) 100%);
+      z-index: -1;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .tip-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(214, 40, 57, 0.3);
+    }
+
+    .tip-card:hover::before {
+      opacity: 1;
+    }
+
+    .tip-img {
+      height: 180px;
+      min-height: 150px;
+      aspect-ratio: 16/9;
+      background-size: cover;
+      background-position: center;
+      transition: all 0.3s ease;
+    }
+
+    .tip-card:hover .tip-img {
+      transform: scale(1.05);
+    }
+
+    .tip-content {
+      padding: 20px;
+    }
+
+    .tip-content h3 {
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      margin-bottom: 10px;
+      color: var(--white);
+      transition: all 0.3s ease;
+    }
+
+    .tip-card:hover .tip-content h3 {
+      color: var(--primary-red);
+    }
+
+    .tip-content p {
+      margin-bottom: 15px;
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    }
+
+    .tip-author {
+      font-style: italic;
+      color: var(--primary-red);
+      margin-top: 15px;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+      transition: all 0.3s ease;
+    }
+
+    .tip-card:hover .tip-author {
+      color: var(--white);
+    }
+
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.4s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.6s;
+    }
+
+    .delay-4 {
+      animation-delay: 0.8s;
+    }
+
+
+    @media (max-width: 992px) {
+      section {
+        padding: 60px 0;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .pouch-container {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .pouch-image {
+        width: 50%;
+        height: 350px;
+        order: 1;
+      }
+
+      .pouch-content {
+        width: 50%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        margin: 10% auto;
+        width: 95%;
+        padding: 20px;
+      }
+
+      .tools-grid {
+        grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
+      }
+
+      .flip-card {
+        aspect-ratio: 1/1.1;
+      }
+
+      .flashcards-container {
+        grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
+      }
+    }
+
+    @media (max-width: 576px) {
+      section {
+        padding: 50px 0;
+      }
+
+      .guide-grid,
+      .kits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+      }
+
+      .flip-card {
+        aspect-ratio: 1/1;
+      }
+
+      .flashcards-container {
+        grid-template-columns: repeat(auto-fill, minmax(min(120px, 100%), 1fr));
+      }
+    }
+
+    @media (max-width: 500px) {
+      .modal-content {
+        max-width: 90vw;
+        padding: 15px;
+      }
+
+      .hero {
+        min-height: 90vh;
+        height: auto;
+        padding: 60px 0;
+      }
+
+      .tip-img,
+      .guide-img {
+        height: 150px;
+      }
+
+      .pouch-image {
+        height: 250px;
+      }
+
+      .flashcards-container {
+        grid-template-columns: repeat(auto-fill, minmax(min(110px, 100%), 1fr));
+      }
+    }
+
+    @media (max-width: 400px) {
+      .flashcards-container {
+        grid-template-columns: repeat(auto-fill, minmax(min(100px, 100%), 1fr));
+      }
+    }
+
+
+
+
+    .footer {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      padding: 4rem 2rem 1.5rem;
+      border-top: 1px solid rgba(214, 40, 57, 0.5);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out forwards;
+      animation-delay: 0.3s;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(214, 40, 57, 0.1) 0%, rgba(0, 0, 0, 0) 50%);
+      z-index: 0;
+    }
+
+    .footer::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(214, 40, 57, 0.6) 50%, transparent 100%);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 3rem;
+      position: relative;
+      z-index: 1;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .footer-logo-column {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .logo-container {
+      width: 200px;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container:hover {
+      transform: scale(1.03);
+    }
+
+    .footer-logo {
+      height: 120px;
+      filter: drop-shadow(0 2px 5px rgba(214, 40, 57, 0.3));
+    }
+
+    .footer-tagline {
+      color: var(--off-white);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 320px;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .footer-tagline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background: var(--primary-red);
+      border-radius: 3px;
+    }
+
+    .footer-newsletter {
+      margin-top: auto;
+    }
+
+    .footer-newsletter h4 {
+      color: var(--white);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .newsletter-form input {
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--white);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-form input:focus {
+      outline: none;
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 2px rgba(214, 40, 57, 0.2);
+    }
+
+    .newsletter-btn {
+      padding: 0.8rem 1.5rem;
+      background: var(--primary-red);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .newsletter-btn:hover {
+      background: #c52638;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(214, 40, 57, 0.3);
+    }
+
+    .footer-column h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-red), rgba(214, 40, 57, 0));
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .link-icon {
+      display: inline-block;
+      margin-right: 8px;
+      color: var(--primary-red);
+      transform: translateX(-5px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .contact-icon {
+      margin-top: 3px;
+    }
+
+    .contact-text {
+      flex: 1;
+    }
+
+    .contact-text a {
+      color: #d1d1d1;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-text a:hover {
+      color: var(--primary-red);
+    }
+
+    .footer-links a {
+      color: #d1d1d1;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+      position: relative;
+      padding: 0.2rem 0;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+      transform: translateX(5px);
+    }
+
+    .footer-links a:hover .link-icon {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      grid-column: 1 / -1;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-copyright {
+      color: #888;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-legal-links {
+      display: flex;
+      gap: 1rem;
+      margin-left: 1rem;
+    }
+
+    .footer-legal-links a {
+      color: #888;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-legal-links a:hover {
+      color: var(--primary-red);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-icon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: 0.5s;
+    }
+
+    .social-icon:hover::before {
+      left: 100%;
+    }
+
+    .social-icon:hover {
+      background: var(--primary-red);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 5px 15px rgba(214, 40, 57, 0.4);
+    }
+
+    .social-icon i {
+      color: var(--white);
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .social-icon:hover i {
+      transform: scale(1.1);
+    }
+
+
+    @media (max-width: 1024px) {
+      .footer-container {
+        grid-template-columns: 1.5fr repeat(3, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .footer-container {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-logo-column {
+        grid-column: 1 / -1;
+      }
+
+      .footer-newsletter {
+        max-width: 400px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer {
+        padding: 3rem 1.5rem 1.5rem;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+      }
+
+      .footer-copyright {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .footer-legal-links {
+        margin-left: 0;
+        justify-content: center;
+      }
+
+      .footer-newsletter {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .footer-social {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    .invalid-feedback {
+      color: #ffffff;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+
+    .is-invalid {
+      border-color: #ff6b6b !important;
+    }
+
+    .is-valid {
+      border-color: #51cf66 !important;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a href="index.html"><img src="Vaultecho-1.png" alt="VaultEcho Logo"></a>
+    </div>
+
+    <div class="hamburger" id="hamburger">
+      <i class="fas fa-bars"></i>
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+      <li>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      </li>
+      <li class="dropdown" id="vaultkitDropdown">
+        <a href="#" class="dropdown-toggle"><i class="fas fa-box-open"></i> VaultKit</a>
+        <div class="dropdown-content">
+          <a href="emergency.html"><i class="fas fa-tools"></i> Emergency Toolkit</a>
+          <a href="survival.html"><i class="fas fa-lightbulb"></i> Survival Tips</a>
+        </div>
+      </li>
+      <li>
+        <a href="echoalert.html"><i class="fas fa-bell"></i> EchoAlert</a>
+      </li>
+      <li>
+        <a href="community.html"><i class="fas fa-users"></i> Community</a>
+      </li>
+      <li>
+        <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+      </li>
+      <li>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      </li>
+      <li>
+        <a href="signal.html" class="btn-signal"><i class="fas fa-sign-in-alt"></i> SIGNAL IN</a>
+      </li>
+    </ul>
+  </nav>
+
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Emergency Preparedness Toolkit</h1>
+        <p>Your comprehensive digital safety companion. Be ready for any situation with our curated collection of
+          life-saving tools, guides, and resources.</p>
+        <a href="#tools" class="btn">Explore Tools</a>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="tools" class="emergency-tools">
+    <div class="container">
+      <div class="section-title">
+        <h2>Quick Access Emergency Tools</h2>
+        <p>Essential tools at your fingertips when seconds count</p>
+      </div>
+      <div class="tools-grid">
+
+        <div class="flip-card fade-in delay-1">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <i class="fas fa-bell"></i>
+              <h3>SOS Signal</h3>
+              <p>Send emergency alerts with your location</p>
+            </div>
+            <div class="flip-card-back">
+              <i class="fas fa-bell"></i>
+              <h3>SOS Signal</h3>
+              <p>Activate to send your location to emergency contacts</p>
+              <button id="sosBtn" class="tool-btn">Activate SOS</button>
+              <div id="sosStatus" class="status-message" style="display: none;"></div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="flip-card fade-in delay-2">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <i class="fas fa-lightbulb"></i>
+              <h3>Flashlight</h3>
+              <p>Turn your screen into a light source</p>
+            </div>
+            <div class="flip-card-back">
+              <i class="fas fa-lightbulb"></i>
+              <h3>Flashlight</h3>
+              <p>Use when you need emergency lighting</p>
+              <button id="flashlightBtn" class="tool-btn">Toggle Flashlight</button>
+              <div id="flashlightStatus" style="margin-top: 10px; font-size: 0.8rem;"></div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="flip-card fade-in delay-3">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <i class="fas fa-bolt"></i>
+              <h3>Screen Flasher</h3>
+              <p>Visual distress signal</p>
+            </div>
+            <div class="flip-card-back">
+              <i class="fas fa-bolt"></i>
+              <h3>Screen Flasher</h3>
+              <p>Attract attention with flashing screen</p>
+              <button id="flasherBtn" class="tool-btn">Start Flashing</button>
+              <div id="flasherWarning" style="margin-top: 10px; font-size: 0.8rem; color: var(--light-color);"></div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="flip-card fade-in delay-4">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <i class="fas fa-bullhorn"></i>
+              <h3>Emergency Siren</h3>
+              <p>Audible distress signal</p>
+            </div>
+            <div class="flip-card-back">
+              <i class="fas fa-bullhorn"></i>
+              <h3>Emergency Siren</h3>
+              <p>Sound to attract help</p>
+              <button id="sirenBtn" class="tool-btn">Play Siren</button>
+              <div id="sirenWarning" style="margin-top: 10px; font-size: 0.8rem; color: var(--light-color);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="emergency-guide">
+    <div class="container">
+      <div class="section-title">
+        <h2>Emergency Guide Manual</h2>
+        <p>Life-saving knowledge for critical situations</p>
+      </div>
+      <div class="guide-grid">
+        <div class="guide-card fade-in delay-1">
+          <div class="guide-img"
+            style="background-image: url('data:image/jpeg;base64,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');">
+          </div>
+          <div class="guide-content">
+            <h3>First Aid Quick Guide</h3>
+            <p>Essential first aid procedures for common emergencies including CPR, choking, burns, and bleeding.</p>
+            <a href="PDF/First_Aid_Quick_Guide.docx" class="btn" download>Download PDF</a>
+          </div>
+        </div>
+
+        <div class="guide-card fade-in delay-2">
+          <div class="guide-img"
+            style="background-image: url('https://t4.ftcdn.net/jpg/08/54/08/19/360_F_854081958_ZiSNRL8cl3FG8eDxZ7lWX9qtZAPVbSQR.jpg');">
+          </div>
+          <div class="guide-content">
+            <h3>Bandaging Techniques</h3>
+            <p>Step-by-step instructions for proper wound care and bandaging for various types of injuries.</p>
+            <a href="PDF/Bandaging_Techniques.docx" class="btn" download>Download PDF</a>
+          </div>
+        </div>
+
+        <div class="guide-card fade-in delay-3">
+          <div class="guide-img"
+            style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+          </div>
+          <div class="guide-content">
+            <h3>Injury Checklist</h3>
+            <p>Comprehensive assessment guide to evaluate injuries and determine appropriate response.</p>
+            <a href="PDF/Injury_Checklist.docx" class="btn" download>Download PDF</a>
+          </div>
+        </div>
+
+        <div class="guide-card fade-in delay-4">
+          <div class="guide-img"
+            style="background-image: url('https://castlehillser.com/wp-content/uploads/2023/12/pediatric-emergency-medicine-pa.jpg');">
+          </div>
+          <div class="guide-content">
+            <h3>Emergency Child Care</h3>
+            <p>Specialized first aid and care procedures for infants and children in emergency situations.</p>
+            <a href="PDF/emergency_child_care.docx" class="btn" download>Download PDF</a>
+          </div>
+        </div>
+
+        <div class="guide-card fade-in delay-1">
+          <div class="guide-img"
+            style="background-image: url('https://govciomediaresearch.imgix.net/wp-content/uploads/2025/02/shutterstock_2571248409.jpg?fit=max&auto=format&cs=adobergb1998&auto=compress');">
+          </div>
+          <div class="guide-content">
+            <h3>Natural Disaster Response</h3>
+            <p>How to prepare for and respond to earthquakes, hurricanes, floods, and other natural disasters.</p>
+            <a href="PDF/natural_disaster_response.docx" class="btn" download>Download PDF</a>
+          </div>
+        </div>
+
+        <div class="guide-card fade-in delay-2">
+          <div class="guide-img"
+            style="background-image: url('https://media.istockphoto.com/id/1272890172/photo/photo-of-the-campfire-at-the-mountains-with-a-vintage-teapot-on-it.jpg?s=612x612&w=0&k=20&c=gbg4Wv231zLXv-gRPndX6NbD1FJk-0RPWUbcSkJbTXw=');">
+          </div>
+          <div class="guide-content">
+            <h3>Wilderness Survival</h3>
+            <p>Essential skills for surviving in the wild including shelter, water, fire, and food procurement.</p>
+            <a href="PDF/wilderness_survival.docx" class="btn" download>Download PDF</a>
+          </div>
+        </div>
+
+        <div class="guide-card fade-in delay-3">
+          <div class="guide-img"
+            style="background-image: url('https://images.stockcake.com/public/1/b/2/1b2eef2a-e1b3-4cb4-a58d-2bcb3a83b267_large/urban-apocalypse-survivor-stockcake.jpg');">
+          </div>
+          <div class="guide-content">
+            <h3>Urban Survival Guide</h3>
+            <p>How to stay safe and find resources during urban emergencies and disasters.</p>
+            <a href="PDF/urban_survival_guide.docx" class="btn" download>Download PDF</a>
+          </div>
+        </div>
+
+        <div class="guide-card fade-in delay-4">
+          <div class="guide-img"
+            style="background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxIQEhUREhMVFRUXFRUVFxUVFRUVFRUVFRUWFxUVFhUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGy0lHx0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAJsBRAMBEQACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAADAQIEBQYABwj/xABDEAABAwIEAgcFBQYEBgMAAAABAAIDBBEFEiExQVEGEyJhcYGRMkJSobEjYnLB0QcUkqLh8CRDwvEVM3OCssMWU2P/xAAbAQADAQEBAQEAAAAAAAAAAAAAAQIDBAUGB//EADIRAAICAQMCAwcDBQEBAQAAAAABAhEDEiExBEEFE1EiMmGBkaHwFHHBBkKx0eEzYlL/2gAMAwEAAhEDEQA/APVaTZMCWEAOCAHBADggBwQAoQAqAFQAqAFSAVAHIA5ACoARAHIA8w6e9NbudTwO7LTZzh7zhvbuH9eS5Mk3N0uD7HwfwdRis2Zbvhei/Pzk82mmc83JJSSo+piq2QgKZomPjdY6JBsTWxPPBTaM3KK7hGUz+SNSIeSA2M3TY5Kg7X8FJm0S4KkxkFpSqzCeJT2Zuei3Se5DHHX6hXCbiz5rxLwulqjwbuOQOAcNiuxO1Z8xKLi6YpTEIUAMKQCoA4IAeEwFQA1yQAHuQAEJiHhACoASyAINJsmMlBADggB4QA4IAcEAKEAOQAqAFSA5ACoA5AHIA5AHIAyv7Q8dNLTZGG0st2NI3a333jyIA73Dkss09Kr1PZ8E6JdRn1SXsw3fxfZfz+yPEJt1zo++GNKotbD0FixOs4HkQfmk+CWm9j0qDodUn3APFzf1U+VN9j5efjPTL+77MLXdFZYInyvLLNA0BJOpA5d6bxSirZGHxbFmyrHG9zzuoBa825prdH1kKlBWGil5pNGco+gUO4pEUcyqLHAt0I1RQPEpRpnqnQrHRK0McdT8j/X9FphnT0s+J8X6DynqXY1xXUeAIUAMSAVADmhADgmAqAGlAEaVqQgeVMBQgByAGkoAhUuyYySEAOCAHhADggBwQA4IAVADgkBxIGp0QBDnxeCMXdI3yN/opc4+posU32KSv6bRM0jjfIbX2yAakbnwUPL6I1j077sFTdMHP3ZE3l9oTrrYEhtvml5rKfTx9X9CV/8AJSDqxtuYcNrDX5/JJ5Wuwl06fcPF0qpze72i3M+SPPQ/0kuw6m6UUr3ZesaPG4G5Frny9Ul1Eb3Kl0ORK0iF0j6KRYi5s3XvaQwNaBldHa5NwN768+ATlCOTdM7Oh8UydDF49Ce9vlP8+R5f0i6HT0zyA5jwNrENcRwOQk29VlvHZn02DxnDlim01fzX1/4ZySNzDlcCDyKE7PUxZo5FcXaDw0z3C4aUnJI6NUY8sktwuS1yLJOaI/UY0+T6AwuRzoYnPBa4xsLgdw4tFwfNdseEflvUxjHNOMXaTdftYPGoc9PK3nG71AuPopyK4svo56OohL4o8afhedxcuLUfoa6rRGhpwdGplfrCunGR5arW6OqHtw1CPYDqhMaZY9HMUMMg10ulJdzk6/pVlxs9soqnrI2vHvAHz4/NdcJaopn5tnxPHkcH2D3VGRwQAoQA8JgOQByAEKABPCBDMqYHFqAGlqAG5ECIFKdEFEkFADgUAPBQA4FADgUAPDSlYAamsjjF3vAUSyxjybQwTn7qMvi3TuKO7YhmPxHbyHFYSzt+6jsh0KjvkfyMRiPSiaYm7zY8OHks93ya1Fe6iLTT1ExLY2veeNhextuTsPEqkmRKlyTX4DKAXVM7WNAJyMPWPvbbg1vDW58E69WSpeiLHA6ugiflMTXC9i+b7U6C1wDoOegCWpLsU4Tktn/Bshg+H1TQWsYL8YiWW0+Fpt6haJY58HO5Z8T3+5Aq/wBn0R/5cz2/ja14+WVDwLsy49a1zH8+5mMW6FVsF3sa2do/+s9u34HWJ8G3KylhkjsxdZils3X7lLR4/LA6we5ha65Y67SCOBadlg4eh16oy95WdieLPnkMjjbMb9wvwC0T7shaUlFdiBjD2uiBO4Oh8dx/fJEXcj1PCdSytLhoueimETVMOaKPMA4tJuAARY21PIhU4Sk9kdnX9ZhwZKySptX/AB/BrsN6IS52GZoDA4FwzA3AN7ac1UcEr3PD6jxjFoksT3rbY3a7D5gRwuLc9EDTp2UUHROnaLdt3i79AsFgienPxfqJPsvkEqMApxG/LGM2R1iSSQbG25Tlhik6Ix+I53kjqltaPGsXbaQHmueJ+h9K7x0QiSmdCQkcgBTaHKNo9m6A1fW0g+64j5A/qtcHuteh+d+OYfL6r90aTKVseMLZAHBABAmAqAOQAhQAwoEJZMDrIAQhADbIAq6VuiQySGoAeGoAcGpgODUAY7pB04EEroYmgll2uefiG4A7jp5Ljy5pW1Hg9Tp+jhoUsj3fb4GYrOmdRLpnIH3dPosGpy95nbGOGHuxRRVdc92rnE+JVLGkEuob2RGp4nzOyxtL3cmi9vHkPFXRhJt8l9S4RDD2ql2d3CJh0H4nDfwHqlZG74JFRjj7ZIwI2DZrRYDyCVk6dypmle/ckospRBxwFQ2bwiWNBJLHqxxHgVGxrV8l2zpNVtFs/qAVSyS9TJ9Pj7xJ2HdMZmH7XtD0KpZpx72RPpMc1sqE6VOoKyIzO0mDRYado7AOBGtr772HcreWEt+5jDDlxvTyjz6WiFvs3Fp9R6H8kjaEmnuVlRFMSMwJttYaeKqKSPpuhydOl7Mt/ieo/sZqPs6iI7tex/8AG0g/+AW+J8nj/wBTw9rFkXdNfSn/ACejFbHywOOZriQ1zSRa4BBIvtcDbYpWipQlFJtNWPTJK/HMXio4utlva4aA0AuJN9ACRwBPkplJRVs6uj6PJ1eTy8fPO/BlJ/2n049mCZ34sjfo4rPzl6Huw/pfqH72SK/a3/CPMcTreudcNyi5sL309AsEqPscGHyo03YEPsNUzZq2CzJlI9c/ZG+9PL3SAfy3/NaYe58L/U6rqIfFfybtbnzIhCAEAQA4IA5AHIAQoASyAOsgBLJgdZAhLIADDCAEhherCAFyoAXKgDsqAPn7pE//ABM3/WlP87lxtbs9dT9lfsi26PdEamqAcGZGH/Mk7LSPujd3kLd6ai3wZzyqPLNM7BcOom/bO/eJB7uzb/hB+pKlzgtrthGGWe9UvjyUmIY+XDJE1sUY2YwBo9As3Js1UEviVBeTumUKCOKVglYySoaEi0gP7+eCNJoiwohO9peyN7mjdzWOLR4uAsEvLsvzEtmMfXkbg+YS0F2hRiLSlpYbCSTNdxSolgizktFIhwAm4PyWqkqJ0tMky1UjGExyPY7S5Y5zSRfYlp1HHyUaqlset4bpnk0ZIqS+Kun8yv650n/Mc534nF31VM+h0Rh7iS/bY3n7Kpg2aaP4o2u/gcR/7Frge58x/UsG8OOfo2vqv+HpS6T48wn7S7uyM4Na53iXaX/lXJnb1JH039PVHVL1aX0PLw8HRTR9o1QoZZAaiPMbpo0itgVkyj2T9k9OW0ZefflcR4NDWfVpW2JbM+A/qbIpdYor+2K+9v8AlG0Wp88cgDkAcgDkAKgBEAIgDkAcgDkAcgAbEAPQByAOQBwQB4m2sigq5pnxtkd1kmQP1a05z2svE8r7brgySkn7J6+OClFaiTiHS6omFi8gchoFi1KXvOzohHHD3UUcs7nakqoxSFKbYPOrM7EdUgDdFAtyI2tdI4MYC4k2AGpJOgAA3KNJtFFzJgMkY/xDmRH4C4Of/A25HnZVpaI83H2djoqmmh1ERmfw6wlsY/7WnM/1b4FNJESyt7R2/wAhJekFTOMrn2YNmMDWMA5BjRZKUr2YscdLtc+vf6gXMc4bnxUUjoWWa5SYJ1CSN795A19EUUs0e8fuQJqORuo+pCZs8vTyS2kn9UIzEHx+202S0+htjwLJ/wCck/s/oybFikTt9PIqdMjoj0OV7af8Aqyua7sMGl9Tte3IKoQa3Z63R9B5L1y5GxkWVHVJMvuhOJNpatskhysLXscbE2BFwbDXdrfVXjkouzy/F+ml1HSOGNXJNNfn7NnoU3Tuibs97vwsP+qy286J8rDwHrJcpL93/qzI9LelsNTbq45BYEHNlF77bE96xySU2qPe8M8IzdPeuS39L/0jDxi+qTPpJbbCvfwSoSiBcy6o0TGsiJNrf1TG5JI+gujmH/u1LDDxawZvxnV/8xK6YKon5X1/UfqOpnl//T2/bhfYslRyCXQAl0ALdAC3QAl0AddACXQAl0AddAHXQB10ARYalpG6VgF68c0wF64c0Ad1o5oAUSDmgDwOpBe4vPvEu8zqvPk9z2YLYjvNlKL4G9YqSIchCVVGeoC+mL1Q1Il0FMITmaSHDYg2I8OSlsvU2qJB1U2CicKa6TkaxxlnSUSycjqjjLCOg7ktQ3jQ80Kesny0AdhT5DZjHOPJoJ+iqMm+CJwjFXJ0Q8RwKaIfaxOaDsSND3X2v3K91yiMcoyfsPj0KF+FC5tcarSLtHp4vEM2PZuwctP1dr8b/L/cITvY9/o+q/UQvuhYr3QzplVExkg4qTmlF9gmTikTYJ7gdEy0q3I8ptsmjWO/IxgumU9h7IkmyXI1/QHAuvnEjh2IiHnkXe431F/+3vV4lqZ4PjfX+TgcI+9Pb5d39NvmerOeQuw+DGdegDuu70AL1qAO60IAXrQgBOuCAEM4QA01A5oAaakc0ANNU3mEANNa3mECsb/xBnxBAWZRlQeayNqCtqnc0WFBBVO5osKQ4VTuaLFQ51Y4Am+wP0RY1E80Y0FoHcuKR62PgrKo62REJsfT0rjwV2jEltpgNyk5DURxsNkrKSGpWaJBoWXUtmsYlrSwrNm8UT43gaAXPIKabNrSVstKaiqH6Nj9XAAeK0/TzOZ9b0/r9izOGwwDNVSi/wADdB+p+SryoQ99/Ix/UZcz04I/P82BRdLYmAiOMAX0A081Sz6VsjSXhGWe85bkhvSCOrjkikbYFp7/AD7iN0/1OtOMkYz8Nn084zi73MNJSAm4cPFYrJR6vkP0KPFBncADfKDcjYk8vRawb5Z7vQY/Jg75ZHYwhXZ1t2PDLosm6CtJSIdCuiRYlMGYbosvXQ9sCVkvISqWkLjYeJJ2A5lS2Y5MyirNj0exwUzBE1gy3uTsXE8T36JwzOJ8/wBd0L6iXmSe/wDg1FF0kikNj2T6reHUJ8niZvDMkFa3LDron6XBW6yJ8HDLDJcor66keAXROv3H8iq1Geko34lINCbI1BpQM4pJ8SNQaUMdisvxIsNIN2LS/Eiw0oE7FZfiKdhpQB+JyfEUWGlAX4jJ8RRYaUCNdIdA4osKRIgildu4rRQbIbRYMojb2lpoJsEx64jqCtegArXoAeHIEJUvsx55Ncf5Sh8DXKPPydFyM9KPBHZH73NJ7C5DhyVlKIx70IY3OiylEHJVAcUUaxiWMcoiDS8e03MAOIvby2S0mqjexxxNz9B2R6lGgtyhDk2HRL92bH1tRILg2AJ18dFeOUIO5HF1Ty5Uo41sN6Q9NQ37Ol7I4utb0U5Mrk/Z2RfTdFCCvLu/TsY+erfKbucSTzKySR60cmlUthYc50CGbrOq3Nd0foHRjO/c8Fvgw09TPE8R69SWiADF+iOYGSEBp3MZsAfwE7eB08NlrOKXB2+HeNTa0Z7f/wBf7/2ZuSicw5XNLSNwRYrFnvRzxkri7QM0yVleYK2BFieQIKdFk+YEECVkaxf3dFh5gSOk0zHst5nj+Ee9/eyREsu9Ld/nPoGJFsrRZvzJ5uPP6epMtmdO7fP5wICpHRNZigaLdWL89lSkcWXA+bHU/SJzARa60TZ5+XBGyyo+lN9CbK1OSOPJ00QtTM2XtN3+q3hOzgy4tJAddbGAMoAY5AAigBW0z3bNJ8k0mK0HiwSZ/u28VSixakWMOCuYNQtoRRDkRKmUs0sQuqMUZtldLXvvofmr0oRNYV4x2hmlABWoAK0oEBxJ1oZD/wDm/wD8SlLgqHvIwwOgC5T0exLp2AttyUzKiiFUOyqUWyBJNdWkRZGllcdArUROYkFGSczj6pui45KLeurw4RjKBkblBHEXvc9/6pCeSTv4kAVJJ0UiRIpy4qJUbwbJrKclZ2bxZLZA1vtEN8UkmzZP0NbgOHwEZmvDnciLeh2+i6sWOC3bPO6zJnqkth+I4wYH9WBY8SRY+V+CjLmlqpG3Q+GxyY9ct7IT8Ze/iVjrZ6K6OMOwF1abWIa9vwvGYeXFvkQmps0WBXa2fqtv+P52BfJTHdskZ+6WyN9HZSB5lVqiaKPULhqX77P7WvshjY6dxsKmMHk9sjD822+aNn3E8uaPON/Jp/zf2COpo2jWog8c5P0anS9UT503/ZL6f9Ib8QpW/wCa6TuhhefnJkHzRS9fz7Frz5cQ+rX8WCixxpJDICzk6az3HvDAMo8DmSk64/Pz5mkemm//AEl8lt9+fpQ585ebuJceZ+ncO5Z3fJosaiqSpDkCEJSAFI5NGMyM9y1icGVAs1lojknsTKDE3RuGqpbHLkjqRvMJq4ZgLgXXRGVnnZMbRZuw2E+6FoYkN+Exg7fmhUG5Jip4Wbgei0TRDTJsIjI7NlQh9wNkgBSSdyoRX1lKx4srjJoTRmajALu0W6yE0NYvLOsM1ABmoAI1AEPHXZaeQ/dt6kD81M+C8fvIwxk2XMd1kuJx3CllJlbVuuU0gbZGEZVEhGR2RYUE1KlstRENMXKdRaiS6aj+6VLZSRZUuGPf7thz/qhRb4G5xjyXbcLDYnEPbnt2dRa/JaeR7N9yVnlrS07dzJVtNI1/2uZoPvWv6cCklXJ6UZxr2S6wfFIIdAJj3l7CP4cuipqPxImskvT6P/ZsabGKeqZ1TxmHJ4Fx3tcOI8k3OLVM41gzYpeZB0/h/KKqTow+5EUjSOAdobeIWHlO9j0l4nCl5kX8irrKCoh9uMkc2nMFDi0dmLqMGT3WVE9Q4mwY6/eLJHSpVwQTSTPu6+U8k9USWpPexYqAv0kcbjvT1VwNQte0WVPThgtZS2W32RIAHEJWQ7HCMcExamKGosTZzyEjOTBPKpGEmRZlcWcuQCVomc0ojbq7MHE1PR/o/WS2cG9UzfNJdt/BvtH0t3raMJM4MuSEfibjD8HLBZ87nn7oDR87rZQrucksl8ImmjjG9/NxVUiNTAT00Z0uR8x8/wBUthpszmMNmp+3EMwHAbH9CmsjRWhSDYNj7agfC4btO63VNWjGUWuSZNUuHeqSJIpxAHfRPSIY6rToClYuE6Q7EAFakAVqBGY6WYmCOqabgEZu88B5fms5vsdGKNbmfp+9YM6VuS2aKWWgEtMTqhuilGxghsp1FaDupuix6SXT0/cpsdFtR0GYgAXP97pxi5OkTOagrZe0uFNbqdfouqGBLk4cnVSe0din6VzSBzY2CzQ3NpxNzv4W+ajNKnSOzoIxcXOXNmbMrwLkn1WKkz0LTJlFUl12Egs4h2o/3V6qJolswuDg5/qEOSK1S7kinpurIcx17c/1WbNY5L2Zp2CRtnAEsIDrtIdlvuDY6W/RGiS37GDeOVx7/Ha/qSpp7jVDlZjCFPYzmIRtLxZYPk9bBKShuRX0uuiaN1l23K6rhPtN9ofMIRupegynrQdDoeKGmiW0SAQdikOziSEiWxesKZNiOQiGwTyVSZi0Bc1UmZSiDIVpmUoGrwiCOhaJpWB85PZabERcrff5nhsOZ3jJQ37nnZYSyvSnUf8AJqKHFHS6EZnbm5tGzu+8V0Qy6jzs2BQ/Ny3ZO0e+PKwC1tHM4v0EkqGnYgpWg0sgzg2WUmaRQETCxa7XTUHiFlrNdBiMeopoJc8QPNpAPbb42tfgRzW2PI4uxSipKi0wnGxLGCd+IXfGpK0cco0yROWvFwrIK90hGioDmLzTpDtKACtKQFB0nxzqrxRnte8Rw+6O/ms5y7I2xw7sxxlJ171kbImQPus2bIlxm5QNFjE0HQqGbROkouSlFMYyiPFMCQ2OxAuBc2QlYm6RpqGlbE2w1PE813wgoo8jLleR2yUCrMgNVSMkHa0I2dxH9FE4KXJtizSxv2foYarkje1z2G9jZzToe42XGz2vaT3A4VkcSxzspJ0vsfNSy9bROnpHR8bo4BTsSGrOyYNk+mri03BIPMGyP2BT7PdFvHVCbRziHDiLdod44nvUS35NYNR9xfIr66ikY7OCHs5j2ge8LOUa3O/DnhJaWqYoEhHs2CncH5afJFrBlIPkUzbG7RBqaO5zBVZqmnyNjpWu5g+KmyZRQ79yI2kP1RZGkcKeQbOB8Qi0KviL1cv3UthUEiopn+y0n8LSVSTfCMZ5Ix95pEyLovVO/wAt3nlb9StFhyPscU+twLmaJmGYDNE/OYnXbq0WB7XPy+tk448ie6Il1GGSrUqZZU3RySR4lnORoOYMvdx5X5BdEMLe8jizdbBezj3fr2C4pi0cQyMs23ABaNpbI40nJ3IylXjJJuHG/wAlDkXQyj6RytO+ilyHos2mH4v10RI3CNbaIeJJlHiNc4TXuRx0NvS/FKrNEqRe9H8eGRwm1bfS4Go7wrjk08meTDqrTyXtNhdI+0jI2niCCeOu19F048ir2Wck4yTqQ+qwOJ+o7J+Lj/XxN1qsjRlRCk6LtOvWE+IYf9KrzWFIxrCsDQkN2ubAczoPVKykm+CjxrpE1gLITc7F/L8I/NZyn6G0caW7MVNKXG5WRpYgcgaJdK/goZomWlKpZpEtqZqzbNUWMdkhsZO8KibKPEJON1aHZssPlzRMdzY31su2PCPHyKpskgqiAjUAY/FsBMZvGNOHI8we9ccsek9nD1CyrfkpZacOvYWI3HELNo2sSGtkYMjiXN5HUt7wUrG0EkHvA3B4hJoExG1NilYybBWJ2IsIMSc3iikyvMa5LfCsSjJyv0vz2CEqKnPWrjyPxvAnPb1jCCN9CpljfKN+l62KeiZnAXMOVwUHr7SVoIY76hInVWzLDB8IlqXZWAWG7naNH6nuVQxym6Ry9V1eLp43J89lyXk2D0tMPt5XPd8LeyPlr81p5eOPvO38DzI9b1Of/wAoqK9X+fwU1X0ipYzaGBunvO1PzWiUeyInLL/fNv8AbYjnpnLsLAcgAFprZyPFB9iZT9N3AWcCfNWsrMZYE3sJN00d7t0nkYlhRU1PSKaQ6Pd6qHNmixr0K2Z7n6uNys3MtQGNjCnUUoHMaLpNlqJb4fW9Tex8lUd0RJDcUq9ja4LePpcd+i1RkHnqv8Pdp2AFhffTQac1PcfAGhx+SlaRmdcC4brw0tm4D2j7NuzoU9KQOWrk1/R/po2QBk/YkvbYi/Pwtr5ghXHI1tIxngT3gaxtU22h+YW2tHN5bPJqrG4o9B23ejf6pOZccfqZ3EcaklOrjblsFDdmuy4Kp7yUhCNiSGDfogY+mmsVLRUWX2H81lI3gW8ZUGtkgSIExkjiqRNlJWtVoGzaYSLQxj7jfmLrsh7qPLyu5smAqjMI0oALYEWOoPBJqxptO0YvpBhL4pesadD7J582u7/78OPJBxfwPX6fMskfiiCxzZOyQGu5foeKyo2toDLC6Pw4hCYmBcwO1bvyRQ9QxpskGoksl71SHyHZMnZJbUWLuYMtyRyulpTGp1ySeugkPaLmnyIR5cTpj1s4cIK3CARmhlY7iQeyh4H2ZtHxGL2nF/5A0uPPjYY2GwJ1tx81nFS4sxzLHOeprgq8QrXO3JK3hFIhyZQTXDrJ2YPcbdTZm0OY5FjoktZop1hoDRNUuRWgLkU2FCGNLUOhzYwlqKoY+RawZlNDZ63QA8AQNbWutUzFoFDXgNs6504k20IsABrw5pIGiJJI9xc92pzXdd4FwdSBmN7HntZUQCZMxr+08ka3Me9+WZ3fudRyvujYLfYuxjnVgBrpbWB7b2Zte4Rut6+SlpFJtmVdMStznOBSAK1wGqAF626QwcjbpWUkCazUFJsaRf0D7LJnQi6p3BQWSg1MljJb8lSJKqrYTsFSA2MIs0DkAPQWXauDypO22FBTEPaUAFY5ADpoWyNLHi4P93HIpNJqmVCbg7RkMXwMxnW5bfsvH58iuLJBxZ62HOsi+PoRWS+5L4B/6/qszVkSsoC03G3MIFZCdLfR3r+qolr0AucWooFIIyqSoqyRFMiwD9b3oTAHNVPYLglOzTHyPoX5gCpTo0fJKnjFrpqQilqX3ckyKGXRZDQWBtyEmxpE8WWdl0c6VrdSQEt2JkR+MRjQEnwBVeXInVEZ/wAVYfi/hKPLkLzIjhX39lrj5W+qPLfcHNDsxtc6dypEtlfNPdamQMPukAOeTvVIhgQ5MB3WJAAzLc5RwegYt0hoNGpZpFEjIos0URBGix0WFJyUFFvTlSWToyUALLqE0IDQ0OeQOJJa0g24XGoC3xRtnPnyaY13ZoAV1HnjwUAPBQAVrkAFY5ABdCLEXB3B2KTVjTadozmM4WGnT2Tt3dy4suPS9uD1MGbzFvyihdHLDt2mfCfy5LOzerIVXTZxmZ6cR4piK3Vuh25Jp0JjXi2xQCaOZMWpDJUVSlQrDlwcgpMFCHRnTVvJElZopp8kr99Yd83hZR7SLtAZXRnb6IthsCLmcifJFSJdDRNyafNGlk6kMlklO1gPmqUI9xOQMUxOrrlVaXBD3CMphyS1E0SYqcclLY0g5s1SMra+q4LSCM5SK7OrZKEMiKCwT3KkJiFyBWNzphYwOWxyj2pDQdgUlpEuGNZtm0UToYCeCmzRIlR4eTrZTY6JEdEUCLCGGyQyS1h5JqLfAnJLkKKUnc2Hjqt44W+Tnn1MV7u5MiaGiwFgulJJUjilJydsICmSOBQA8FABGuQARrkAFY9AD5WNe0tcLg/3cd6mSTVMqEnF6kUNZROj0Pab8X68lxTxuJ6uLNDItufQp6iJzCS0X8N/RQaFVN1clxfK7kdP90+SXsV9RA5u4Toki507AXvCKG2w0VRZS0CZLZUAoGPaQix2HLQpGmdlCB2JlCQHOCQDQlYDXOsiwGuqECshVNWFcYkSkV0klytTManQrEMZToQJ7U6FYCR9lSRLYLOU6FZICoxCMUstEqnUs1iW9E0aLJm6NBRRN00UFE4tCBMQNCBD4Gglb4Ypvc5+om4x2JK6zhZ10CFCAHBADwgB4QA9qACBABGlABmlIBSgaKjEYgCbAbLhypRlSPVwScoJszddTscwPLRmIuT5qEavmivYLsN9bbLRGbKerFtk6EJTu1ChmkGLUCxVR3Jmqewxjik0SmSoXFQxk5jikMeCmA8BJjQ4qSgDikMizSHmmkSyvmldzWySMm2RnlUQzoxdMRYxxN5JgDlCAIEhTJZDkCpEgVRJ/9k=');">
+          </div>
+          <div class="guide-content">
+            <h3>Psychological First Aid</h3>
+            <p>How to provide emotional support and psychological care in crisis situations.</p>
+            <a href="PDF/psychological_first_aid.docx" class="btn" download>Download PDF</a>
+          </div>
+        </div>
+
+        <div class="guide-card fade-in delay-1">
+          <div class="guide-img"
+            style="background-image: url('https://thumbs.dreamstime.com/b/emergency-call-center-communication-service-calls-222092158.jpg');">
+          </div>
+          <div class="guide-content">
+            <h3>Emergency Communication</h3>
+            <p>Methods for establishing communication when normal systems fail during disasters.</p>
+            <a href="PDF/emergency_communication.docx" class="btn" download>Download PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="emergency-kits">
+    <div class="container">
+      <div class="section-title">
+        <h2>Emergency Kits</h2>
+        <p>Prepared for any situation with the right tools</p>
+      </div>
+      <div class="kits-grid">
+        <div class="kit-card fade-in delay-1"
+          onclick="openKitModal('Flood Kit', 'Essential items for flood preparedness and survival:<br><br>- Waterproof container for documents<br>- Life vests<br>- Waterproof flashlight<br>- Water purification tablets<br>- Emergency blanket<br>- First aid kit<br>- Non-perishable food<br>- Bottled water')">
+          <i class="fas fa-water"></i>
+          <h3>Flood Kit</h3>
+          <p>Essential items for flood preparedness and survival.</p>
+        </div>
+
+        <div class="kit-card fade-in delay-2"
+          onclick="openKitModal('War Kit', 'Safety essentials for conflict zones and civil unrest:<br><br>- Gas mask<br>- First aid kit with trauma supplies<br>- Emergency radio<br>- Portable water filter<br>- High-calorie ration bars<br>- Cash in small denominations<br>- Copies of important documents<br>- Whistle')">
+          <i class="fas fa-shield-alt"></i>
+          <h3>War Kit</h3>
+          <p>Safety essentials for conflict zones and civil unrest.</p>
+        </div>
+
+        <div class="kit-card fade-in delay-3"
+          onclick="openKitModal('Heavy Rain Kit', 'Stay dry and safe during severe rainstorms:<br><br>- Waterproof jacket and pants<br>- Waterproof boots<br>- Umbrella<br>- Waterproof bags for electronics<br>- Extra socks<br>- Towel<br>- Waterproof matches<br>- Emergency poncho')">
+          <i class="fas fa-cloud-rain"></i>
+          <h3>Heavy Rain Kit</h3>
+          <p>Stay dry and safe during severe rainstorms.</p>
+        </div>
+
+        <div class="kit-card fade-in delay-4"
+          onclick="openKitModal('Hiking Kit', 'Wilderness survival essentials for outdoor adventures:<br><br>- Topographic map and compass<br>- Multi-tool<br>- Emergency blanket<br>- Fire starter<br>- Water purification tablets<br>- Headlamp with extra batteries<br>- First aid kit<br>- High-energy snacks')">
+          <i class="fas fa-hiking"></i>
+          <h3>Hiking Kit</h3>
+          <p>Wilderness survival essentials for outdoor adventures.</p>
+        </div>
+
+        <div class="kit-card fade-in delay-1"
+          onclick="openKitModal('Driving Kit', 'Roadside emergency preparedness for your vehicle:<br><br>- Jumper cables<br>- Tire repair kit<br>- Flashlight with batteries<br>- Reflective warning triangles<br>- First aid kit<br>- Blanket<br>- Bottled water<br>- Non-perishable snacks')">
+          <i class="fas fa-car"></i>
+          <h3>Driving Kit</h3>
+          <p>Roadside emergency preparedness for your vehicle.</p>
+        </div>
+
+        <div class="kit-card fade-in delay-2"
+          onclick="openKitModal('Travel Kit', 'Compact safety essentials for travelers:<br><br>- Passport copies<br>- Emergency cash in local currency<br>- Basic first aid supplies<br>- Portable charger<br>- Universal adapter<br>- Medications<br>- Emergency contact list<br>- Travel insurance info')">
+          <i class="fas fa-suitcase"></i>
+          <h3>Travel Kit</h3>
+          <p>Compact safety essentials for travelers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div id="kitModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeKitModal()">&times;</span>
+      <h2 id="modalKitTitle"></h2>
+      <div id="modalKitContent" style="margin-top: 20px;"></div>
+      <div style="margin-top: 30px;">
+        <button onclick="closeKitModal()" class="btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+
+  <section class="daily-tools">
+    <div class="container">
+      <div class="section-title">
+        <h2>Daily Use Emergency Items</h2>
+        <p>Essential items you should always carry</p>
+      </div>
+      <div class="flashcards-container">
+        <div class="flashcard fade-in delay-1">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-key"></i>
+              <h3>Whistle</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-key"></i>
+              <h3>Whistle</h3>
+              <p>For signaling help without shouting. Can be heard up to 1 mile away.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-2">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-battery-full"></i>
+              <h3>Power Bank</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-battery-full"></i>
+              <h3>Power Bank</h3>
+              <p>Keep your devices charged in emergencies. Minimum 10,000mAh recommended.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-3">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-prescription-bottle-alt"></i>
+              <h3>Medication</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-prescription-bottle-alt"></i>
+              <h3>Medication</h3>
+              <p>At least 3 days supply of essential medications in a waterproof container.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-4">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-money-bill-wave"></i>
+              <h3>Emergency Cash</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-money-bill-wave"></i>
+              <h3>Emergency Cash</h3>
+              <p>Small bills totaling $50-$100 in case ATMs are unavailable.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-1">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-id-card"></i>
+              <h3>ID Copies</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-id-card"></i>
+              <h3>ID Copies</h3>
+              <p>Photocopies of important documents in a waterproof bag.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-2">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-lightbulb"></i>
+              <h3>Flashlight</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-lightbulb"></i>
+              <h3>Flashlight</h3>
+              <p>Compact, durable LED flashlight with extra batteries.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-3">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-mobile-alt"></i>
+              <h3>Emergency Charger</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-mobile-alt"></i>
+              <h3>Emergency Charger</h3>
+              <p>Solar or hand-crank charger for when power is unavailable.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-4">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-map-marked-alt"></i>
+              <h3>Area Map</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-map-marked-alt"></i>
+              <h3>Area Map</h3>
+              <p>Physical map of your area in case GPS fails or phones die.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-1">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-paperclip"></i>
+              <h3>Multi-tool</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-paperclip"></i>
+              <h3>Multi-tool</h3>
+              <p>Compact tool with pliers, knife, screwdrivers, and other essentials.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-2">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-mask"></i>
+              <h3>N95 Mask</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-mask"></i>
+              <h3>N95 Mask</h3>
+              <p>Protection from smoke, dust, and airborne contaminants.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-3">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-tint"></i>
+              <h3>Water Purifier</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-tint"></i>
+              <h3>Water Purifier</h3>
+              <p>Portable filter or purification tablets for clean drinking water.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard fade-in delay-4">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <i class="fas fa-fire"></i>
+              <h3>Fire Starter</h3>
+            </div>
+            <div class="flashcard-back">
+              <i class="fas fa-fire"></i>
+              <h3>Fire Starter</h3>
+              <p>Waterproof matches or ferro rod for emergency warmth and signaling.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="pouch-builder">
+    <div class="container">
+      <div class="section-title">
+        <h2>Custom Emergency Pouch Builder</h2>
+        <p>Create your personalized emergency kit</p>
+      </div>
+      <div class="pouch-container">
+        <div class="pouch-content">
+          <h3>Build Your Survival Kit</h3>
+          <p>Customize your emergency pouch with items tailored to your specific needs and situations. Your list will be
+            saved for future visits.</p>
+
+          <div class="pouch-form">
+            <div class="form-group">
+              <label for="itemInput">Add an item to your emergency pouch:</label>
+              <input type="text" id="itemInput" placeholder="E.g., Water purification tablets">
+            </div>
+            <button id="addItemBtn" class="btn">Add Item</button>
+
+            <div class="item-list">
+              <h4>Your Emergency Items:</h4>
+              <ul id="itemList">
+
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="pouch-image"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="survival-tips">
+    <div class="container">
+      <div class="section-title">
+        <h2>Survival Hacks & Tips</h2>
+        <p>Real-world wisdom from those who've been there</p>
+      </div>
+      <div class="tips-container">
+        <div class="tip-card fade-in delay-1">
+          <div class="tip-img"
+            style="background-image: 
+                    url('https://media.istockphoto.com/id/494501198/photo/buying-bottle-of-water.jpg?s=612x612&w=0&k=20&c=Cxut2vABifKlzXCRXH5o37gXBXRE5fcA4yve2IwjRgs=');">
+          </div>
+          <div class="tip-content">
+            <h3>The Water Bottle Trick</h3>
+            <p>Always carry an empty water bottle when traveling. It takes no space when empty, but can be filled when
+              you find a clean water source. I was stranded overnight in a remote area and this simple item allowed me
+              to collect rainwater to stay hydrated.</p>
+            <p class="tip-author">— Sarah K., Backpacker</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in delay-2">
+          <div class="tip-img"
+            style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Duct-tape.jpg/960px-Duct-tape.jpg');">
+          </div>
+          <div class="tip-content">
+            <h3>Duct Tape Multi-Tool</h3>
+            <p>Wrap several feet of duct tape around an old credit card or hotel key. It takes almost no space but can
+              repair gear, make splints, create shelter, or even remove splinters. This saved my tent during a sudden
+              mountain storm.</p>
+            <p class="tip-author">— Mark T., Survival Instructor</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in delay-3">
+          <div class="tip-img"
+            style="background-image: url('https://www.shutterstock.com/shutterstock/videos/1107680753/thumb/1.jpg?ip=x480');">
+          </div>
+          <div class="tip-content">
+            <h3>Emergency Contact Info</h3>
+            <p>Write emergency contacts on a piece of paper and seal it in a small plastic bag in your wallet. When I
+              was unconscious after an accident, medical staff found my emergency contacts immediately while my phone
+              was locked.</p>
+            <p class="tip-author">— Lisa M., Frequent Traveler</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in delay-4">
+          <div class="tip-img"
+            style="background-image: url('https://static.vecteezy.com/system/resources/previews/034/977/522/non_2x/ai-generated-businessman-standing-in-rain-and-looking-at-falling-dollar-banknotes-a-rearview-of-a-happy-and-successful-man-standing-under-a-rain-of-money-with-a-lot-of-dollar-banknotes-ai-generated-free-photo.jpg');">
+          </div>
+          <div class="tip-content">
+            <h3>Cash in Multiple Places</h3>
+            <p>Hide small amounts of cash in different places - shoe, wallet, bag lining. When I was robbed abroad, the
+              $50 in my shoe got me to safety and a new passport.</p>
+            <p class="tip-author">— James R., World Traveler</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in delay-1">
+          <div class="tip-img"
+            style="background-image: url('https://thumbs.dreamstime.com/b/temporary-survival-shelter-2672197.jpg');">
+          </div>
+          <div class="tip-content">
+            <h3>Plastic Bag Shelter</h3>
+            <p>A large trash bag can be an emergency shelter, raincoat, or water collector. During an unexpected night
+              in the woods, this kept me dry and warm.</p>
+            <p class="tip-author">— Emma S., Hiker</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in delay-2">
+          <div class="tip-img"
+            style="background-image: url('https://img.freepik.com/premium-photo/abstract-holographic-tape-isolated-transparent-background-vector-realistic-illustration_1199132-104848.jpg?semt=ais_hybrid&w=740');">
+          </div>
+          <div class="tip-content">
+            <h3>Bright Tape Navigation</h3>
+            <p>Mark your trail with bright tape when exploring unfamiliar areas. This helped me retrace my steps when I
+              got lost in a dense forest during a solo hike.</p>
+            <p class="tip-author">— David L., Outdoor Enthusiast</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in delay-3">
+          <div class="tip-img"
+            style="background-image: url('https://suncompany.com/cdn/shop/files/6_760b59df-6953-4037-9f67-b3673d681624_800x.png?v=1718300669');">
+          </div>
+          <div class="tip-content">
+            <h3>Mirror Signaling</h3>
+            <p>A small mirror can signal rescuers up to 10 miles away on a sunny day. I used my compact mirror to
+              attract a helicopter during a desert emergency.</p>
+            <p class="tip-author">— Anita P., Adventure Guide</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in delay-4">
+          <div class="tip-img"
+            style="background-image: url('data:image/jpeg;base64,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');">
+          </div>
+          <div class="tip-content">
+            <h3>Double-Knot Your Shoes</h3>
+            <p>In emergency situations, you might need to run. Double-knotted shoes won't come undone. This simple habit
+              helped me escape a sudden flash flood.</p>
+            <p class="tip-author">— Carlos M., Survival Expert</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in delay-1">
+          <div class="tip-img"
+            style="background-image: url('data:image/jpeg;base64,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');">
+          </div>
+          <div class="tip-content">
+            <h3>Phone Battery Saver</h3>
+            <p>Switch your phone to airplane mode when signal is weak - it stops battery drain from searching for
+              signal. This extended my phone's life by 3 days when lost.</p>
+            <p class="tip-author">— Rachel G., Tech Consultant</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo-column">
+        <div class="logo-container">
+          <a href="index.html"><img src="Vaultecho-1.png" alt="VaultEcho" class="footer-logo"></a>
+        </div>
+        <p class="footer-tagline">Turning silence into signal. Protecting human lives through intelligent emergency
+          response.</p>
+        <div class="footer-newsletter">
+          <h4>Stay Updated</h4>
+          <form class="newsletter-form">
+            <input type="email" name="email" placeholder="Your email address" required>
+            <button type="submit" class="newsletter-btn">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h3>Navigation</h3>
+        <ul class="footer-links">
+          <li><a href="index.html"><span class="link-icon">→</span><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="about.html"><span class="link-icon">→</span><i class="fas fa-info-circle"></i> About Us</a></li>
+          <li><a href="Contact.html"><span class="link-icon">→</span><i class="fas fa-envelope"></i> Contact</a></li>
+          <li><a href="community.html"><span class="link-icon">→</span><i class="fas fa-users"></i> Community</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Essential Tools</h3>
+        <ul class="footer-links">
+          <li><a href="echoalert.html"><span class="link-icon">→</span><i class="fas fa-bell"></i> EchoAlert</a></li>
+          <li><a href="#"><span class="link-icon">→</span><i class="fas fa-box-open"></i> Vaultkit</a></li>
+          <li><a href="emergency.html"><span class="link-icon">→</span><i class="fas fa-tools"></i> Emergency
+              Toolkit</a></li>
+          <li><a href="survival.html"><span class="link-icon">→</span><i class="fas fa-lightbulb"></i> Survival Tip</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div class="contact-text">
+              123 Safety Avenue<br>
+              Emergency City, EC 12345
+            </div>
+          </div><br>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <div class="contact-text">
+              <a href="tel:+18005551234">+1 (800) 555-1234</a><br>
+              <a href="tel:+18005554321">+1 (800) 555-4321</a>
+            </div>
+          </div><br>
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <div class="contact-text">
+              <a href="mailto:support@vaultecho.com">support@vaultecho.com</a><br>
+              <a href="mailto:emergency@vaultecho.com">emergency@vaultecho.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copyright">
+        &copy; 2025 AUTECHO. All rights reserved. <span class="footer-legal-links">
+          <a href="#"><i class="fas fa-lock"></i> Privacy Policy</a> |
+          <a href="#"><i class="fas fa-file-contract"></i> Terms</a> |
+          <a href="#"><i class="fas fa-cookie-bite"></i> Cookies</a>
+        </span>
+      </div>
+      <div class="footer-social">
+        <a href="https://twitter.com/autecho" class="social-icon" aria-label="Twitter" target="_blank"
+          rel="noopener noreferrer">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://facebook.com/autecho" class="social-icon" aria-label="Facebook" target="_blank"
+          rel="noopener noreferrer">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://instagram.com/autecho" class="social-icon" aria-label="Instagram" target="_blank"
+          rel="noopener noreferrer">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://linkedin.com/company/autecho" class="social-icon" aria-label="LinkedIn" target="_blank"
+          rel="noopener noreferrer">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://youtube.com/autecho" class="social-icon" aria-label="YouTube" target="_blank"
+          rel="noopener noreferrer">
+          <i class="fab fa-youtube"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdown = document.getElementById('vaultkitDropdown');
+
+
+      hamburger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+
+
+      if (dropdownToggle) {
+        dropdownToggle.addEventListener('click', function (e) {
+          if (window.innerWidth <= 992) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+          }
+        });
+      }
+
+
+      document.addEventListener('click', function (e) {
+        if (window.innerWidth <= 992) {
+          if (!e.target.closest('.navbar') && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+          }
+          if (!e.target.closest('.dropdown') && dropdown.classList.contains('active')) {
+            dropdown.classList.remove('active');
+          }
+        }
+      });
+
+
+      const dropdownItems = document.querySelectorAll('.dropdown-content a');
+      dropdownItems.forEach(item => {
+        item.addEventListener('click', function () {
+          if (window.innerWidth <= 992) {
+            dropdown.classList.remove('active');
+          }
+        });
+      });
+    });
+
+
+    window.addEventListener('resize', function () {
+      const navLinks = document.getElementById('navLinks');
+      const dropdown = document.getElementById('vaultkitDropdown');
+      const hamburger = document.getElementById('hamburger');
+
+      if (window.innerWidth > 992) {
+        navLinks.classList.remove('active');
+        dropdown.classList.remove('active');
+        hamburger.classList.remove('active');
+      }
+    });
+  </script>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+      const sosBtn = document.getElementById('sosBtn');
+      const sosStatus = document.getElementById('sosStatus');
+      if (sosBtn) {
+        sosBtn.addEventListener('click', function () {
+          if (navigator.geolocation) {
+            sosStatus.style.display = 'block';
+            sosStatus.textContent = 'Getting location...';
+
+            navigator.geolocation.getCurrentPosition(
+              function (position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                sosStatus.innerHTML = `SOS sent!<br>Location:<br>Lat: ${lat.toFixed(4)}<br>Lng: ${lng.toFixed(4)}<br><small>(Simulated alert)</small>`;
+
+                setTimeout(() => {
+                  sosStatus.innerHTML += '<br>Help is coming!';
+                }, 2000);
+              },
+              function (error) {
+                sosStatus.textContent = 'Error: ' + error.message.split('.')[0];
+                setTimeout(() => {
+                  sosStatus.innerHTML += '<br>Alert sent!';
+                }, 1000);
+              },
+              { timeout: 5000 }
+            );
+          } else {
+            sosStatus.textContent = 'Geolocation not supported';
+          }
+        });
+      }
+
+
+      const flashlightBtn = document.getElementById('flashlightBtn');
+      const flashlightStatus = document.getElementById('flashlightStatus');
+      let flashlightOn = false;
+      if (flashlightBtn) {
+        flashlightBtn.addEventListener('click', function () {
+          flashlightOn = !flashlightOn;
+          if (flashlightOn) {
+            document.body.style.backgroundColor = 'white';
+            document.body.style.color = 'black';
+            flashlightBtn.textContent = 'Turn Off';
+            flashlightStatus.textContent = 'Flashlight is ON - tap to turn off';
+            flashlightStatus.style.color = 'black';
+          } else {
+            document.body.style.backgroundColor = '';
+            document.body.style.color = '';
+            flashlightBtn.textContent = 'Toggle Flashlight';
+            flashlightStatus.textContent = 'Flashlight is OFF';
+            flashlightStatus.style.color = '';
+          }
+        });
+      }
+
+
+      const flasherBtn = document.getElementById('flasherBtn');
+      const flasherWarning = document.getElementById('flasherWarning');
+      let flasherInterval;
+      if (flasherBtn) {
+        flasherBtn.addEventListener('click', function () {
+          if (flasherInterval) {
+            clearInterval(flasherInterval);
+            flasherInterval = null;
+            document.body.style.backgroundColor = '';
+            document.body.style.color = '';
+            flasherBtn.textContent = 'Start Flashing';
+            flasherWarning.textContent = '';
+          } else {
+            let white = false;
+            flasherInterval = setInterval(function () {
+              document.body.style.backgroundColor = white ? 'white' : 'red';
+              document.body.style.color = white ? 'black' : 'white';
+              white = !white;
+            }, 500);
+            flasherBtn.textContent = 'Stop Flashing';
+            flasherWarning.textContent = 'Warning: Flashing lights may trigger seizures in photosensitive individuals';
+          }
+        });
+      }
+
+
+      const sirenBtn = document.getElementById('sirenBtn');
+      const sirenWarning = document.getElementById('sirenWarning');
+      let sirenAudio;
+      if (sirenBtn) {
+
+        try {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          const audioContext = new AudioContext();
+          let oscillator;
+          let gainNode;
+
+          sirenBtn.addEventListener('click', function () {
+            if (!oscillator) {
+
+              oscillator = audioContext.createOscillator();
+              gainNode = audioContext.createGain();
+
+              oscillator.connect(gainNode);
+              gainNode.connect(audioContext.destination);
+
+              oscillator.type = 'sine';
+              oscillator.frequency.value = 800;
+              gainNode.gain.value = 0.3;
+
+
+              oscillator.start();
+
+
+              let goingUp = true;
+              const sirenInterval = setInterval(() => {
+                if (goingUp) {
+                  oscillator.frequency.value += 20;
+                  if (oscillator.frequency.value >= 1200) goingUp = false;
+                } else {
+                  oscillator.frequency.value -= 20;
+                  if (oscillator.frequency.value <= 600) goingUp = true;
+                }
+              }, 50);
+
+              sirenBtn.textContent = 'Stop Siren';
+              sirenWarning.textContent = 'Warning: Loud sound - use only in real emergencies';
+
+
+              sirenBtn.dataset.oscillator = oscillator;
+              sirenBtn.dataset.gainNode = gainNode;
+              sirenBtn.dataset.sirenInterval = sirenInterval;
+            } else {
+
+              oscillator.stop();
+              clearInterval(sirenBtn.dataset.sirenInterval);
+              oscillator = null;
+              gainNode = null;
+              sirenBtn.textContent = 'Play Siren';
+              sirenWarning.textContent = '';
+            }
+          });
+        } catch (e) {
+          sirenBtn.addEventListener('click', function () {
+            alert('Audio not supported in your browser. In a real emergency, shout for help!');
+          });
+        }
+      }
+
+
+      window.openKitModal = function (title, content) {
+        const modal = document.getElementById('kitModal');
+        const modalTitle = document.getElementById('modalKitTitle');
+        const modalContent = document.getElementById('modalKitContent');
+
+        modalTitle.textContent = title;
+        modalContent.innerHTML = content;
+
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      };
+
+      window.closeKitModal = function () {
+        const modal = document.getElementById('kitModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      };
+
+
+      window.onclick = function (event) {
+        const modal = document.getElementById('kitModal');
+        if (event.target == modal) {
+          closeKitModal();
+        }
+      };
+
+
+      const addItemBtn = document.getElementById('addItemBtn');
+      const itemInput = document.getElementById('itemInput');
+      const itemList = document.getElementById('itemList');
+
+
+      loadItems();
+
+      if (addItemBtn && itemInput && itemList) {
+        addItemBtn.addEventListener('click', addItem);
+        itemInput.addEventListener('keypress', function (e) {
+          if (e.key === 'Enter') addItem();
+        });
+      }
+
+      function addItem() {
+        const itemText = itemInput.value.trim();
+        if (itemText === '') return;
+
+        const li = document.createElement('li');
+        li.innerHTML = `
+                    ${itemText}
+                    <button class="delete-btn">&times;</button>
+                `;
+
+        itemList.appendChild(li);
+        itemInput.value = '';
+
+
+        li.querySelector('.delete-btn').addEventListener('click', function () {
+          li.remove();
+          saveItems();
+        });
+
+        saveItems();
+      }
+
+      function saveItems() {
+        const items = [];
+        document.querySelectorAll('#itemList li').forEach(li => {
+          items.push(li.textContent.replace('×', '').trim());
+        });
+        localStorage.setItem('emergencyPouchItems', JSON.stringify(items));
+      }
+
+      function loadItems() {
+        const savedItems = localStorage.getItem('emergencyPouchItems');
+        if (savedItems) {
+          const items = JSON.parse(savedItems);
+          items.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                            ${item}
+                            <button class="delete-btn">&times;</button>
+                        `;
+            itemList.appendChild(li);
+
+
+            li.querySelector('.delete-btn').addEventListener('click', function () {
+              li.remove();
+              saveItems();
+            });
+          });
+        }
+      }
+
+
+      const fadeElements = document.querySelectorAll('.fade-in');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      fadeElements.forEach(element => {
+        observer.observe(element);
+      });
+    });
+  </script>
+
+  <script src="Jquery Validation/dist/jquery.validate.min.js"></script>
+  <script>
+    $(document).ready(function () {
+
+      $(".newsletter-form").validate({
+        rules: {
+          email: {
+            required: true,
+            email: true
+          }
+        },
+        messages: {
+          email: {
+            required: "Please enter your email address",
+            email: "Please enter a valid email address"
+          }
+        },
+        errorElement: "div",
+        errorClass: "invalid-feedback",
+        highlight: function (element, errorClass) {
+          $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function (element, errorClass) {
+          $(element).addClass("is-valid").removeClass("is-invalid");
+        },
+        submitHandler: function (form) {
+
+          alert("Thank you for subscribing!");
+          form.reset();
+          return false;
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
