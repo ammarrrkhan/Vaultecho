@@ -1,0 +1,3656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaultEcho | EchoAlert</title>
+    <link rel="icon" type="image/png" href="favIcon-copy.png">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_ACTUAL_API_KEY&callback=initMap" async defer></script>
+
+    <style>
+        :root {
+            --primary-red: #d62839;
+            --dark-red: #911d2a;
+            --accent-color: #e63946;
+            --pure-black: #000000;
+            --dark-gray: #121212;
+            --medium-gray: #1d1d1d;
+            --light-gray: #2a2a2a;
+            --white: #FFFFFF;
+            --off-white: #f1f1f1;
+            --light-color: #f1faee;
+            --dark-blue: #1d3557;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding-top: 140px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .navbar-brand,
+        .footer-column h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            background-color: #2926264b;
+            border-bottom: 2px solid var(--light-gray);
+            height: 120px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(18px);
+            z-index: 1000;
+        }
+
+        .navbar-brand img {
+            height: 90px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            font-size: 1.1rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            position: relative;
+            padding: 1.2rem 0.8rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-red);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 1rem;
+            left: 0.8rem;
+            background-color: var(--primary-red);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: calc(100% - 1.6rem);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--medium-gray);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            padding: 12px 16px;
+            display: block;
+            color: var(--off-white);
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--light-gray);
+            color: var(--primary-red);
+        }
+
+        .dropdown-content a::after {
+            display: none;
+        }
+
+        .btn-signal {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-signal:hover {
+            background-color: var(--dark-red);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            color: white;
+            font-size: 1.8rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 992px) {
+            .navbar {
+                height: 120px;
+                padding: 0 15px;
+            }
+
+            .navbar-brand img {
+                height: 100px;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 118px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--dark-gray);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+                transition: left 0.3s ease;
+                z-index: 1000;
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                padding: 0.8rem 0;
+                border-bottom: 1px solid var(--medium-gray);
+            }
+
+            .nav-links a {
+                padding: 0.5rem 0;
+            }
+
+            .nav-links a::after {
+                bottom: 0.3rem;
+                left: 0;
+            }
+
+            .dropdown-content {
+                position: static;
+                display: none;
+                width: 100%;
+                box-shadow: none;
+                margin-top: 0.5rem;
+                background-color: var(--medium-gray);
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: none;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .btn-signal {
+                width: 100%;
+                justify-content: center;
+                padding: 10px;
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand img {
+                height: 85px;
+            }
+
+            .hamburger {
+                font-size: 1.6rem;
+            }
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+
+        section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-delay-1 {
+            transition-delay: 0.2s;
+        }
+
+        .fade-in-delay-2 {
+            transition-delay: 0.4s;
+        }
+
+        .fade-in-delay-3 {
+            transition-delay: 0.6s;
+        }
+
+
+
+
+        .emergency-hero {
+            position: relative;
+            margin-top: -19px;
+            height: 80vh;
+            min-height: 600px;
+            background-color: var(--pure-black);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(214, 40, 57, 0.2);
+        }
+
+        .pulse-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center,
+                    rgba(214, 40, 57, 0.1) 0%,
+                    transparent 70%);
+            animation: pulse 8s infinite alternate;
+        }
+
+        .radar-scan {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(0deg, transparent 47%, rgba(214, 40, 57, 0.05) 50%, transparent 53%),
+                linear-gradient(90deg, transparent 47%, rgba(214, 40, 57, 0.05) 50%, transparent 53%);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+
+        .emergency-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(214, 40, 57, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(214, 40, 57, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            padding: 0 5%;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 4;
+        }
+
+
+        .emergency-badge {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 30px;
+        }
+
+        .badge-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .badge-icon {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            z-index: 2;
+            box-shadow: var(--neon-glow);
+            animation: badgePulse 2s infinite;
+        }
+
+        .badge-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-red);
+            border-radius: 50%;
+            opacity: 0;
+            animation: ripple 3s infinite;
+        }
+
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .title-strobe {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: strobe 5s infinite;
+        }
+
+        .title-alert {
+            color: var(--primary-red);
+            text-shadow: var(--neon-glow);
+            position: relative;
+        }
+
+        .title-alert::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-red);
+            box-shadow: var(--neon-glow);
+            animation: alertUnderline 3s infinite;
+        }
+
+
+        .hero-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .typing-text {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--primary-red);
+            animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .status-light {
+            width: 15px;
+            height: 15px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px #00ff00;
+            animation: statusPulse 2s infinite;
+        }
+
+        .status-text {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+
+        .emergency-btn {
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 25px rgba(214, 40, 57, 0.5);
+            margin-bottom: 40px;
+            z-index: 2;
+        }
+
+        .emergency-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(214, 40, 57, 0.7);
+        }
+
+        .emergency-btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-red);
+            border-radius: 50px;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            animation: btnRipple 4s infinite;
+        }
+
+        .btn-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-icon {
+            position: relative;
+            z-index: 2;
+            margin-left: 10px;
+            animation: boltShake 0.5s infinite alternate;
+        }
+
+
+        .hero-visual {
+            position: relative;
+            width: clamp(250px, 80vw, 400px);
+            height: clamp(250px, 80vw, 400px);
+            margin-left: 2rem;
+        }
+
+        .radar-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(214, 40, 57, 0.3);
+            box-shadow: 0 0 30px rgba(214, 40, 57, 0.2);
+            overflow: hidden;
+        }
+
+        .radar-sweep {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(from 0deg,
+                    transparent 0%,
+                    rgba(214, 40, 57, 0.1) 70%,
+                    transparent 100%);
+            border-radius: 50%;
+            animation: radarSweep 4s linear infinite;
+        }
+
+        .radar-dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 5px var(--primary-red));
+            opacity: 0;
+        }
+
+        .dot-1 {
+            top: 30%;
+            left: 40%;
+            animation: dotAppear 4s infinite;
+        }
+
+        .dot-2 {
+            top: 60%;
+            left: 70%;
+            animation: dotAppear 4s infinite 1s;
+        }
+
+        .dot-3 {
+            top: 75%;
+            left: 30%;
+            animation: dotAppear 4s infinite 2s;
+        }
+
+
+        .alert-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(214, 40, 57, 0.1);
+            border-top: 1px solid rgba(214, 40, 57, 0.3);
+            padding: 10px 0;
+            overflow: hidden;
+        }
+
+        .alert-marquee {
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: rgba(214, 40, 57, 0.8);
+        }
+
+
+        .siren-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .siren-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .siren-content {
+            background: var(--dark-gray);
+            border: 3px solid var(--primary-red);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 50px rgba(214, 40, 57, 0.7);
+            position: relative;
+            overflow: hidden;
+            animation: sirenBorder 1s infinite alternate;
+        }
+
+        .siren-icon {
+            font-size: 4rem;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+            animation: sirenPulse 0.5s infinite alternate;
+        }
+
+        .siren-title {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .siren-message {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .siren-close-btn {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .siren-close-btn:hover {
+            background: var(--dark-red);
+            transform: translateY(-2px);
+        }
+
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.2;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.1;
+            }
+        }
+
+        @keyframes badgePulse {
+            0% {
+                transform: scale(1);
+                box-shadow: var(--neon-glow);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 15px rgba(214, 40, 57, 0.8),
+                    0 0 30px rgba(214, 40, 57, 0.6),
+                    0 0 45px rgba(214, 40, 57, 0.4);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: var(--neon-glow);
+            }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes strobe {
+
+            0%,
+            45%,
+            55%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes alertUnderline {
+
+            0%,
+            100% {
+                width: 100%;
+                left: 0;
+            }
+
+            50% {
+                width: 0;
+                left: 50%;
+            }
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: var(--primary-red)
+            }
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes statusPulse {
+            0% {
+                opacity: 0.7;
+            }
+
+            50% {
+                opacity: 1;
+                box-shadow: 0 0 15px #00ff00;
+            }
+
+            100% {
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes btnRipple {
+            0% {
+                transform: scale(0.9);
+                opacity: 0.7;
+            }
+
+            70%,
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes boltShake {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(3px);
+            }
+        }
+
+        @keyframes radarSweep {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes dotAppear {
+
+            0%,
+            70%,
+            100% {
+                opacity: 0;
+            }
+
+            10%,
+            60% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes sirenBorder {
+            0% {
+                border-color: var(--primary-red);
+                box-shadow: 0 0 50px rgba(214, 40, 57, 0.7);
+            }
+
+            100% {
+                border-color: var(--accent-color);
+                box-shadow: 0 0 50px rgba(230, 57, 70, 0.7);
+            }
+        }
+
+        @keyframes sirenPulse {
+            0% {
+                transform: scale(1);
+                text-shadow: 0 0 10px var(--primary-red);
+            }
+
+            100% {
+                transform: scale(1.1);
+                text-shadow: 0 0 30px var(--primary-red);
+            }
+        }
+
+
+
+
+        .location-section {
+            padding: 5rem 0;
+            background-color: var(--medium-gray);
+            position: relative;
+        }
+
+        .location-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent 0%, var(--medium-gray) 100%);
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .location-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transform-style: preserve-3d;
+        }
+
+        .location-btn {
+            width: 100%;
+            padding: 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--off-white);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+
+        .location-btn i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-red);
+            transition: all 0.3s ease;
+        }
+
+        .location-btn span {
+            display: block;
+            margin-top: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+
+
+
+        .network-section {
+            padding: 5rem 0;
+            background-color: var(--light-gray);
+            position: relative;
+        }
+
+        .network-card {
+            background: var(--medium-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(214, 40, 57, 0.2);
+        }
+
+        .network-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(214, 40, 57, 0.2);
+        }
+
+        .network-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-red), var(--dark-red));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .network-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .network-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--dark-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+
+
+
+        .emergency-numbers {
+            padding: 5rem 0;
+           
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emergency-numbers::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--medium-gray);
+            z-index: 1;
+        }
+
+        .numbers-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            color: var(--white);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: var(--primary-red);
+            box-shadow: 0 0 10px var(--primary-red);
+        }
+
+        .section-subtitle {
+            font-family: 'Poppins', sans-serif;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+        }
+
+        .number-card {
+            background: var(--medium-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid var(--primary-red);
+            height: 100%;
+        }
+
+        .number-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(214, 40, 57, 0.2);
+        }
+
+        .number-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right,
+                    transparent 0%,
+                    transparent 50%,
+                    rgba(214, 40, 57, 0.1) 50%,
+                    rgba(214, 40, 57, 0.1) 100%);
+            transform: rotate(30deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .number-card:hover::before {
+            animation: shine 1.5s infinite;
+            opacity: 1;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -50%;
+            }
+
+            100% {
+                left: 150%;
+            }
+        }
+
+        .number-card h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            font-size: 1.1rem;
+        }
+
+        .number-card h4 i {
+            margin-right: 8px;
+        }
+
+        .number-card h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary-red);
+        }
+
+        .phone-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--white);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .description {
+            font-family: 'Poppins', sans-serif;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .call-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            background: var(--primary-red);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .call-btn:hover {
+            background: var(--dark-red);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(214, 40, 57, 0.4);
+            color: white;
+        }
+
+        .call-btn i {
+            margin-right: 6px;
+        }
+
+
+
+
+        .protocols-section {
+            padding: 5rem 0;
+            background-color: var(--dark-gray);
+            position: relative;
+        }
+
+        .protocol-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
+
+        .protocol-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 15px 35px rgba(214, 40, 57, 0.3);
+        }
+
+        .protocol-header {
+            background: linear-gradient(to right, var(--dark-red), var(--primary-red));
+            padding: 1.2rem;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+        }
+
+        .protocol-body {
+            padding: 1.5rem;
+        }
+
+        .protocol-step {
+            display: flex;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .protocol-number {
+            background-color: var(--primary-red);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            margin-right: 0.8rem;
+            flex-shrink: 0;
+        }
+
+
+
+
+        .popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .popup-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background-color: var(--medium-gray);
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            padding: 1.5rem;
+            position: relative;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            border: 1px solid var(--primary-red);
+            box-shadow: 0 10px 30px rgba(214, 40, 57, 0.3);
+        }
+
+        .popup-modal.active .popup-content {
+            transform: translateY(0);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--off-white);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .popup-title {
+            color: var(--primary-red);
+            margin-bottom: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+        }
+
+        .contact-form input {
+            background-color: var(--light-gray);
+            border: 1px solid var(--dark-red);
+            color: var(--off-white);
+            padding: 0.6rem;
+            border-radius: 6px;
+            width: 100%;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .contact-form input::placeholder {
+            color: rgba(241, 241, 241, 0.6);
+        }
+
+        .contact-form button {
+            background: linear-gradient(to right, var(--dark-red), var(--primary-red));
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(214, 40, 57, 0.4);
+        }
+
+
+        .modal-content {
+            background-color: var(--light-gray);
+            color: var(--off-white);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .btn-close {
+            filter: invert(1);
+        }
+
+        .font-monospace {
+            font-family: monospace;
+        }
+
+
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 4.5rem;
+            }
+
+            .hero-visual {
+                width: 350px;
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 80px;
+            }
+
+            .hero-content {
+                margin-bottom: 40px;
+                max-width: 100%;
+            }
+
+            .hero-visual {
+                margin-top: 40px;
+                margin-left: 0;
+            }
+
+            .network-avatar {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .emergency-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+
+            .hero-visual {
+                width: 300px;
+                height: 300px;
+            }
+
+            .location-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .number-card h4 {
+                font-size: 1rem;
+            }
+
+            .phone-number {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .emergency-hero {
+                min-height: 500px;
+            }
+
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .emergency-badge {
+                width: 60px;
+                height: 60px;
+                margin: 0 auto 20px;
+            }
+
+            .badge-icon {
+                font-size: 24px;
+            }
+
+            .siren-content {
+                padding: 30px 20px;
+            }
+
+            .siren-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-subtitle {
+                height: auto;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .typing-text {
+                white-space: normal;
+                border-right: none;
+                animation: none;
+            }
+
+            .cursor {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .protocol-header h4 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .emergency-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .hero-visual {
+                width: 250px;
+                height: 250px;
+            }
+
+            .location-btn {
+                padding: 1rem;
+            }
+
+            .location-btn i {
+                font-size: 1.5rem;
+            }
+
+            .number-card {
+                padding: 1rem;
+            }
+
+            .call-btn {
+                padding: 0.4rem 1rem;
+            }
+        }
+
+
+
+        .footer {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            padding: 4rem 2rem 1.5rem;
+            border-top: 1px solid rgba(214, 40, 57, 0.5);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(214, 40, 57, 0.1) 0%, rgba(0, 0, 0, 0) 50%);
+            z-index: 0;
+        }
+
+        .footer::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(214, 40, 57, 0.6) 50%, transparent 100%);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .footer-logo-column {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .logo-container {
+            width: 200px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.03);
+        }
+
+        .footer-logo {
+            height: 120px;
+            filter: drop-shadow(0 2px 5px rgba(214, 40, 57, 0.3));
+        }
+
+        .footer-tagline {
+            color: var(--off-white);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 320px;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .footer-tagline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary-red);
+            border-radius: 3px;
+        }
+
+        .footer-newsletter {
+            margin-top: auto;
+        }
+
+        .footer-newsletter h4 {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .newsletter-form input {
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 2px rgba(214, 40, 57, 0.2);
+        }
+
+        .newsletter-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .newsletter-btn:hover {
+            background: #c52638;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(214, 40, 57, 0.3);
+        }
+
+        .footer-column h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-red), rgba(214, 40, 57, 0));
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .link-icon {
+            display: inline-block;
+            margin-right: 8px;
+            color: var(--primary-red);
+            transform: translateX(-5px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .contact-icon {
+            margin-top: 3px;
+        }
+
+        .contact-text {
+            flex: 1;
+        }
+
+        .contact-text a {
+            color: #d1d1d1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-text a:hover {
+            color: var(--primary-red);
+        }
+
+        .footer-links a {
+            color: #d1d1d1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            padding: 0.2rem 0;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .footer-links a:hover .link-icon {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            grid-column: 1 / -1;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-copyright {
+            color: #888;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-legal-links {
+            display: flex;
+            gap: 1rem;
+            margin-left: 1rem;
+        }
+
+        .footer-legal-links a {
+            color: #888;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-legal-links a:hover {
+            color: var(--primary-red);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .social-icon:hover::before {
+            left: 100%;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-red);
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(214, 40, 57, 0.4);
+        }
+
+        .social-icon i {
+            color: var(--white);
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover i {
+            transform: scale(1.1);
+        }
+
+
+        @media (max-width: 1024px) {
+            .footer-container {
+                grid-template-columns: 1.5fr repeat(3, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-logo-column {
+                grid-column: 1 / -1;
+            }
+
+            .footer-newsletter {
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer {
+                padding: 3rem 1.5rem 1.5rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-copyright {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .footer-legal-links {
+                margin-left: 0;
+                justify-content: center;
+            }
+
+            .footer-newsletter {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .footer-social {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        .invalid-feedback {
+            color: #ffffff;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .is-invalid {
+            border-color: #ff6b6b !important;
+        }
+
+        .is-valid {
+            border-color: #51cf66 !important;
+        }
+
+
+
+                .saferoute-section {
+            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--medium-gray) 100%);
+            padding: 80px 0;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .saferoute-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, var(--primary-red)10 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, var(--accent-color)10 0%, transparent 50%);
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-red), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px var(--primary-red)30); }
+            100% { filter: drop-shadow(0 0 20px var(--accent-color)50); }
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--off-white);
+            margin-bottom: 3rem;
+            opacity: 0.8;
+        }
+
+        .route-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .route-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(214, 40, 57, 0.2);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.1rem;
+            margin-right: 15px;
+            font-weight: 500;
+            color: var(--off-white);
+            font-size: 0.95rem;
+        }
+
+        .location-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .location-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 20px rgba(214, 40, 57, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .location-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .detect-location-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-red);
+            border: none;
+            color: var(--white);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .detect-location-btn:hover {
+            background: var(--dark-red);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .travel-modes {
+            margin: 2rem 0;
+        }
+
+        .mode-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 15px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .mode-btn:hover {
+            background: rgba(214, 40, 57, 0.2);
+            border-color: var(--primary-red);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(214, 40, 57, 0.3);
+        }
+
+        .mode-btn.active {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(214, 40, 57, 0.4);
+        }
+
+        .find-route-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-red), var(--accent-color));
+            border: none;
+            color: var(--white);
+            padding: 18px 30px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .find-route-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .find-route-btn:hover::before {
+            left: 100%;
+        }
+
+        .find-route-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(214, 40, 57, 0.4);
+        }
+
+        .find-route-btn:active {
+            transform: translateY(-1px);
+            animation: buttonPulse 0.3s ease;
+        }
+
+        @keyframes buttonPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
+
+        .map-container {
+            margin-top: 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            position: relative;
+            height: 400px;
+        }
+
+        .map-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .route-info {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .route-info.show {
+            display: block;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: var(--off-white);
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--primary-red);
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid var(--primary-red);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .route-card {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+
+            .mode-buttons {
+                flex-direction: column;
+            }
+
+            .mode-btn {
+                justify-content: center;
+            }
+
+            .map-container {
+                height: 300px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .route-card {
+                padding: 1rem;
+            }
+
+            .find-route-btn {
+                padding: 15px 25px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="index.html"><img src="Vaultecho-1.png" alt="VaultEcho Logo"></a>
+        </div>
+
+        <div class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+            <li>
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="dropdown" id="vaultkitDropdown">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-box-open"></i> VaultKit</a>
+                <div class="dropdown-content">
+                    <a href="emergency.html"><i class="fas fa-tools"></i> Emergency Toolkit</a>
+                    <a href="survival.html"><i class="fas fa-lightbulb"></i> Survival Tips</a>
+                </div>
+            </li>
+            <li>
+                <a href="echoalert.html"><i class="fas fa-bell"></i> EchoAlert</a>
+            </li>
+            <li>
+                <a href="community.html"><i class="fas fa-users"></i> Community</a>
+            </li>
+            <li>
+                <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            </li>
+            <li>
+                <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+            </li>
+            <li>
+                <a href="signal.html" class="btn-signal"><i class="fas fa-sign-in-alt"></i> SIGNAL IN</a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <section class="emergency-hero show">
+        <div class="pulse-effect"></div>
+        <div class="radar-scan"></div>
+        <div class="emergency-grid"></div>
+
+        <div class="container hero-container">
+            <div class="hero-content">
+
+                <div class="emergency-badge fade-in"><br>
+                    <div class="badge-inner">
+                        <div class="badge-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="badge-pulse"></div>
+                    </div>
+                </div><br>
+
+
+                <h1 class="hero-title fade-in fade-in-delay-1">
+                    <span class="title-strobe">ECHO</span><span class="title-alert">ALERT</span>
+                </h1>
+
+
+                <div class="hero-subtitle fade-in fade-in-delay-2">
+                    <div class="typing-text">Emergency response system activated</div>
+                    <div class="cursor">|</div>
+                </div>
+
+
+                <div class="status-indicator fade-in fade-in-delay-2">
+                    <div class="status-light active"></div>
+                    <div class="status-text">SYSTEM ONLINE</div>
+                </div>
+
+
+                <button class="emergency-btn fade-in fade-in-delay-3" id="panicButton">
+                    <span class="btn-pulse"></span>
+                    <span class="btn-text">ACTIVATE PANIC MODE</span>
+                    <span class="btn-icon">
+                        <i class="fas fa-bolt"></i>
+                    </span>
+                </button>
+            </div>
+
+            <div class="hero-visual fade-in fade-in-delay-4">
+
+                <div class="radar-container">
+                    <div class="radar-sweep"></div>
+                    <div class="radar-dots">
+                        <div class="dot dot-1"></div>
+                        <div class="dot dot-2"></div>
+                        <div class="dot dot-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="alert-bar">
+            <div class="alert-marquee">
+                <span>EMERGENCY ALERT SYSTEM ACTIVE • YOUR SAFETY IS OUR PRIORITY • 24/7 MONITORING ENABLED</span>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="siren-modal" id="sirenModal">
+        <div class="siren-content">
+            <div class="siren-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="siren-title">EMERGENCY ALERT ACTIVATED</h3>
+            <p class="siren-message">Don't worry, your emergency shortcuts have been activated and your location has
+                been shared with your trusted contacts. You will receive a confirmation message shortly. Our response
+                team has been notified and is already tracking your location.</p>
+            <button class="siren-close-btn" id="closeSirenModal">ACKNOWLEDGE</button>
+        </div>
+    </div>
+
+
+    <section class="location-section" id="location-section">
+        <div class="container text-center mb-5">
+            <h2 class="section-title ">Share Your Location</h2><br><br>
+            <p class="lead fade-in fade-in-delay-1">Instantly notify trusted contacts of your whereabouts</p>
+        </div>
+
+        <div class="location-grid">
+            <div class="location-card fade-in" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare
+                data-tilt-max-glare="0.2">
+                <button class="location-btn" id="locationBtn1">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Send to Mom
+                    <span>Share your current location instantly</span>
+                </button>
+            </div>
+
+            <div class="location-card fade-in fade-in-delay-1" data-tilt data-tilt-max="10" data-tilt-speed="400"
+                data-tilt-glare data-tilt-max-glare="0.2">
+                <button class="location-btn" id="locationBtn2">
+                    <i class="fas fa-home"></i>
+                    Send to Home
+                    <span>Alert your household of your position</span>
+                </button>
+            </div>
+
+            <div class="location-card fade-in fade-in-delay-2" data-tilt data-tilt-max="10" data-tilt-speed="400"
+                data-tilt-glare data-tilt-max-glare="0.2">
+                <button class="location-btn" id="locationBtn3">
+                    <i class="fas fa-user-friends"></i>
+                    Send to John
+                    <span>Notify your emergency contact</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <div class="alert alert-dark text-center fade-in fade-in-delay-3"
+                style="background-color: var(--light-gray); border-left: 4px solid var(--primary-red); color: white;">
+                <i class="fas fa-info-circle me-2" style="color: var(--primary-red);"></i>
+                Your location is only shared when you explicitly trigger these buttons.
+            </div>
+        </div>
+    </section>
+
+
+    <section class="network-section" id="network-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Your Safety Network</h2><br><br>
+                <p class="lead fade-in fade-in-delay-1">Trusted contacts who will be alerted in emergencies</p>
+            </div>
+
+            <div class="row" id="safetyNetworkContainer">
+                <div class="col-md-6 col-lg-3 fade-in">
+                    <div class="network-card" data-tilt data-tilt-scale="1.05">
+                        <div class="network-avatar">M</div>
+                        <h5>Mom</h5>
+                        <p class="text-muted-white">Primary Contact</p>
+                        <p>Will receive all emergency alerts and your live location when activated.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 fade-in fade-in-delay-1">
+                    <div class="network-card" data-tilt data-tilt-scale="1.05">
+                        <div class="network-avatar">J</div>
+                        <h5>John</h5>
+                        <p class="text-muted-white">Secondary Contact</p>
+                        <p>Receives critical alerts and can track your location during emergencies.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 fade-in fade-in-delay-2">
+                    <div class="network-card" data-tilt data-tilt-scale="1.05">
+                        <div class="network-avatar">H</div>
+                        <h5>Home</h5>
+                        <p class="text-muted-white">Location Alert</p>
+                        <p>Your household will be notified when you trigger location sharing.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 fade-in fade-in-delay-3">
+                    <div class="network-card" data-tilt data-tilt-scale="1.05" id="addContactCard">
+                        <div class="network-avatar">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <h5>Add Contact</h5>
+                        <p class="text-muted-white">Expand Your Network</p>
+                        <p>Add additional trusted contacts to your emergency network.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="saferoute-section">
+    <div class="container">
+        <h2 class="section-title">SafeRoute Navigator</h2><br><br>
+        <p class="section-subtitle">Navigate safely with real-time route optimization and danger zone detection</p>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="route-card">
+                    
+                    <div class="input-group">
+                        <label class="input-label">
+                            <i class="fas fa-map-marker-alt"></i> Your Location
+                        </label>
+                        <div class="position-relative">
+                            <input type="text" id="currentLocation" class="location-input" placeholder="Enter your current location">
+                            <button class="detect-location-btn" id="detectLocationBtn">
+                                <i class="fas fa-crosshairs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">
+                            <i class="fas fa-flag-checkered"></i> Destination
+                        </label>
+                        <input type="text" id="destination" class="location-input" placeholder="Enter your destination">
+                    </div>
+
+                    
+                    <div class="travel-modes">
+                        <label class="input-label">
+                            <i class="fas fa-route"></i> Travel Mode
+                        </label>
+                        <div class="mode-buttons">
+                            <button class="mode-btn" data-mode="walking">
+                                <i class="fas fa-walking"></i>
+                                Walking
+                            </button>
+                            <button class="mode-btn active" data-mode="driving">
+                                <i class="fas fa-car"></i>
+                                Car
+                            </button>
+                            <button class="mode-btn" data-mode="bicycling">
+                                <i class="fas fa-bicycle"></i>
+                                Bike
+                            </button>
+                        </div>
+                    </div>
+
+                    
+                    <button class="find-route-btn" id="findRouteBtn">
+                        <i class="fas fa-search"></i>
+                        Find Best Route
+                    </button>
+
+                    
+                    <div class="loading-spinner" id="loadingSpinner">
+                        <div class="spinner"></div>
+                        <p>Calculating optimal route...</p>
+                    </div>
+
+                    
+                    <div class="map-container">
+                        <iframe 
+                            id="mapIframe"
+                            class="map-iframe"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.1234567890123!2d-74.0059413!3d40.7127753!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzQ2LjAiTiA3NMKwMDAnMjEuNCJX!5e0!3m2!1sen!2sus!4v1234567890123"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    
+                    <div class="route-info" id="routeInfo">
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fas fa-clock"></i> Estimated Time
+                            </span>
+                            <span class="info-value" id="estimatedTime">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fas fa-route"></i> Distance
+                            </span>
+                            <span class="info-value" id="distance">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fas fa-shield-alt"></i> Safety Level
+                            </span>
+                            <span class="info-value" id="safetyLevel">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <section class="emergency-numbers" id="emergency-numbers">
+        <div class="container numbers-container">
+            <div class="text-center mb-5">
+                <h2 class="section-title ">Emergency Helpline Numbers</h2><br><br>
+                <p class="section-subtitle fade-in fade-in-delay-1">Immediate assistance for critical situations</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3 fade-in">
+                    <div class="number-card">
+                        <h4><i class="fas fa-fire"></i> Fire Emergency</h4>
+                        <div class="phone-number">101</div>
+                        <div class="description">For all fire-related emergencies. Call immediately if you see fire or
+                            smell smoke.</div>
+                        <a href="tel:101" class="call-btn">
+                            <i class="fas fa-phone"></i> Call Now
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 fade-in fade-in-delay-1">
+                    <div class="number-card">
+                        <h4><i class="fas fa-ambulance"></i> Medical Emergency</h4>
+                        <div class="phone-number">102</div>
+                        <div class="description">For ambulance and medical emergencies. Call for heart attacks, strokes,
+                            or serious injuries.</div>
+                        <a href="tel:102" class="call-btn">
+                            <i class="fas fa-phone"></i> Call Now
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 fade-in fade-in-delay-2">
+                    <div class="number-card">
+                        <h4><i class="fas fa-shield-alt"></i> Police Emergency</h4>
+                        <div class="phone-number">100</div>
+                        <div class="description">For immediate police assistance. Call for crimes in progress or
+                            life-threatening situations.</div>
+                        <a href="tel:100" class="call-btn">
+                            <i class="fas fa-phone"></i> Call Now
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 fade-in fade-in-delay-3">
+                    <div class="number-card">
+                        <h4><i class="fas fa-life-ring"></i> Disaster Response</h4>
+                        <div class="phone-number">108</div>
+                        <div class="description">For natural disasters, accidents, or large-scale emergencies requiring
+                            coordinated response.</div>
+                        <a href="tel:108" class="call-btn">
+                            <i class="fas fa-phone"></i> Call Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="protocols-section" id="protocols-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                
+                <h2 class="section-title ">Emergency Protocols</h2><br><br>
+                <p class="lead fade-in fade-in-delay-1">Critical information for emergency situations</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 fade-in">
+                    <div class="protocol-card" id="fireProtocol">
+                        <div class="protocol-header">
+                            <h4><i class="fas fa-fire me-2"></i> In Case of Fire Emergency</h4>
+                        </div>
+                        <div class="protocol-body">
+                            <p>If you discover a fire:</p>
+                            <ol>
+                                <li>Activate the nearest fire alarm</li>
+                                <li>Call the fire department immediately at <strong>101</strong></li>
+                                <li>Evacuate the building using the nearest safe exit</li>
+                                <li>Do not use elevators</li>
+                                <li>If trapped, seal doors with wet cloth and signal from window</li>
+                            </ol>
+                            <p class="mt-3"><strong>Remember:</strong> Stop, Drop, and Roll if your clothes catch fire.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 fade-in fade-in-delay-1">
+                    <div class="protocol-card" id="medicalProtocol">
+                        <div class="protocol-header">
+                            <h4><i class="fas fa-ambulance me-2"></i> In Case of Medical Emergency</h4>
+                        </div>
+                        <div class="protocol-body">
+                            <p>For medical emergencies:</p>
+                            <ol>
+                                <li>Call ambulance at <strong>102</strong> immediately</li>
+                                <li>Check if the person is responsive</li>
+                                <li>Begin CPR if trained and if person isn't breathing</li>
+                                <li>Use AED if available and follow voice prompts</li>
+                                <li>Stay with the person until help arrives</li>
+                            </ol>
+                            <p class="mt-3"><strong>Important:</strong> Don't move injured person unless in immediate
+                                danger.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-family: 'Orbitron', sans-serif;">Share Location</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="locationStatus">
+                        <div class="d-flex align-items-center">
+                            <div class="spinner-border text-danger me-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div>
+                                <h6 style="font-family: 'Orbitron', sans-serif;">ACQUIRING LOCATION</h6>
+                                <p class="mb-0">Securely retrieving your coordinates...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="locationResult" style="display: none;">
+                        <div class="alert alert-dark mb-3"
+                            style="background-color: var(--medium-gray); border-left: 3px solid var(--primary-red);">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 style="font-family: 'Orbitron', sans-serif; color: white;">LOCATION LOCKED</h6>
+                                    <p class="mb-1" style="color: white;">Accuracy: <span id="accuracy"
+                                            class="text-primary"></span> meters
+                                    </p>
+                                </div>
+                                <div class="text-end">
+                                    <small class="text-white">Coordinates</small>
+                                    <p class="mb-0"><span id="coordinates" class="font-monospace"
+                                            style="color: white;"></span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="map"
+                            style="height: 250px; width: 100%; background: var(--medium-gray); margin-bottom: 1.5rem; border-radius: 8px; overflow: hidden;">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d462118.02491053584!2d67.15546194999999!3d25.193202399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.
+                        1!3m3!1m2!1s0x3eb33e06651d4bbf%3A0x9cf92f44555a0c23!2sKarachi!5e0!3m2!1sen!2s!4v1755038120700!5m2!1sen!2s"
+                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <p class="text-white mb-4">Your location will be shared with your emergency contacts.</p>
+
+
+                        <button class="btn btn-danger w-100 py-3" id="shareLocationBtn"
+                            style="font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">
+                            <i class="fas fa-paper-plane me-2"></i> CONFIRM SHARE
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="popup-modal" id="addContactModal">
+        <div class="popup-content">
+            <button class="popup-close" id="closeAddContactModal">&times;</button>
+            <h3 class="popup-title"><i class="fas fa-user-plus me-2"></i> Add Emergency Contact</h3>
+            <form class="contact-form mt-4" id="contactForm">
+                <input type="text" id="contactName" placeholder="Full Name" required>
+                <input type="text" id="contactRelationship" placeholder="Relationship (e.g. Friend, Doctor)">
+                <input type="tel" id="contactPhone" placeholder="Phone Number" required>
+                <input type="email" id="contactEmail" placeholder="Email Address">
+                <div class="d-flex justify-content-between mt-3">
+                    <button type="button" class="btn btn-outline-secondary" id="cancelAddContact">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Save Contact
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo-column">
+                <div class="logo-container">
+                    <a href="index.html"><img src="Vaultecho-1.png" alt="VaultEcho" class="footer-logo"></a>
+                </div>
+                <p class="footer-tagline">Turning silence into signal. Protecting human lives through intelligent
+                    emergency response.</p>
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <form class="newsletter-form">
+                        <input type="email" name="email" placeholder="Your email address" required>
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><span class="link-icon">→</span><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="about.html"><span class="link-icon">→</span><i class="fas fa-info-circle"></i> About
+                            Us</a></li>
+                    <li><a href="Contact.html"><span class="link-icon">→</span><i class="fas fa-envelope"></i>
+                            Contact</a></li>
+                    <li><a href="community.html"><span class="link-icon">→</span><i class="fas fa-users"></i>
+                            Community</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Essential Tools</h3>
+                <ul class="footer-links">
+                    <li><a href="echoalert.html"><span class="link-icon">→</span><i class="fas fa-bell"></i>
+                            EchoAlert</a></li>
+                    <li><a href="#"><span class="link-icon">→</span><i class="fas fa-box-open"></i> Vaultkit</a></li>
+                    <li><a href="emergency.html"><span class="link-icon">→</span><i class="fas fa-tools"></i> Emergency
+                            Toolkit</a></li>
+                    <li><a href="survival.html"><span class="link-icon">→</span><i class="fas fa-lightbulb"></i>
+                            Survival Tip</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div class="contact-text">
+                            123 Safety Avenue<br>
+                            Emergency City, EC 12345
+                        </div>
+                    </div><br>
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <div class="contact-text">
+                            <a href="tel:+18005551234">+1 (800) 555-1234</a><br>
+                            <a href="tel:+18005554321">+1 (800) 555-4321</a>
+                        </div>
+                    </div><br>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <div class="contact-text">
+                            <a href="mailto:support@vaultecho.com">support@vaultecho.com</a><br>
+                            <a href="mailto:emergency@vaultecho.com">emergency@vaultecho.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                &copy; 2025 AUTECHO. All rights reserved. <span class="footer-legal-links">
+                    <a href="#"><i class="fas fa-lock"></i> Privacy Policy</a> |
+                    <a href="#"><i class="fas fa-file-contract"></i> Terms</a> |
+                    <a href="#"><i class="fas fa-cookie-bite"></i> Cookies</a>
+                </span>
+            </div>
+            <div class="footer-social">
+                <a href="https://twitter.com/autecho" class="social-icon" aria-label="Twitter" target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://facebook.com/autecho" class="social-icon" aria-label="Facebook" target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://instagram.com/autecho" class="social-icon" aria-label="Instagram" target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://linkedin.com/company/autecho" class="social-icon" aria-label="LinkedIn" target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://youtube.com/autecho" class="social-icon" aria-label="YouTube" target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyYourRealKeyHere&callback=initMap"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            if ($('[data-tilt]').length) {
+                $('[data-tilt]').tilt({
+                    glare: true,
+                    maxGlare: 0.2,
+                    reset: false
+                });
+            }
+
+
+            const sections = document.querySelectorAll('section');
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.95;
+            }
+
+            function checkScrollVisibility() {
+                sections.forEach(section => {
+                    if (isInViewport(section)) section.classList.add('show');
+                });
+                fadeElements.forEach(el => {
+                    if (isInViewport(el)) el.classList.add('show');
+                });
+            }
+
+            checkScrollVisibility();
+
+            let isScrolling;
+            window.addEventListener('scroll', () => {
+                clearTimeout(isScrolling);
+                isScrolling = setTimeout(checkScrollVisibility, 10);
+            });
+
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+                    }
+                });
+            });
+
+
+            let currentRecipient = '';
+            const locationModalEl = document.getElementById('locationModal');
+            const locationModal = locationModalEl ? new bootstrap.Modal(locationModalEl) : null;
+
+            ['locationBtn1', 'locationBtn2', 'locationBtn3'].forEach((btnId, i) => {
+                const recipientList = ['Mom', 'Home', 'John'];
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    btn.addEventListener('click', () => initiateLocationShare(recipientList[i]));
+                }
+            });
+
+            function initiateLocationShare(recipient) {
+                currentRecipient = recipient;
+                document.getElementById('locationStatus').style.display = 'block';
+                document.getElementById('locationResult').style.display = 'none';
+                if (locationModal) locationModal.show();
+                getLocation();
+            }
+
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition, showError, {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0
+                    });
+                } else {
+                    document.getElementById('locationStatus').innerHTML =
+                        '<div class="alert alert-danger">Geolocation is not supported by this browser.</div>';
+                }
+            }
+
+            function showPosition(position) {
+                const lat = position.coords.latitude.toFixed(6);
+                const lng = position.coords.longitude.toFixed(6);
+                const accuracy = position.coords.accuracy.toFixed(0);
+
+                document.getElementById('coordinates').textContent = `${lat}, ${lng}`;
+                document.getElementById('accuracy').textContent = accuracy;
+
+                document.getElementById('locationStatus').style.display = 'none';
+                document.getElementById('locationResult').style.display = 'block';
+
+                if (typeof updateMapPosition === 'function') {
+                    updateMapPosition(position);
+                }
+            }
+
+            function showError(error) {
+                const messages = {
+                    1: "You denied the request for Geolocation.",
+                    2: "Location information is unavailable.",
+                    3: "The request to get user location timed out.",
+                    default: "An unknown error occurred."
+                };
+
+                const message = messages[error.code] || messages.default;
+
+                document.getElementById('locationStatus').innerHTML = `
+            <div class="alert alert-danger">
+                <h6 style="font-family: 'Orbitron', sans-serif;">LOCATION ERROR</h6>
+                <p>${message}</p>
+                <button class="btn btn-sm btn-outline-light mt-2" onclick="getLocation()">
+                    <i class="fas fa-sync-alt me-2"></i>Try Again
+                </button>
+            </div>
+        `;
+            }
+
+            const shareBtn = document.getElementById('shareLocationBtn');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', () => {
+                    const coordinates = document.getElementById('coordinates').textContent;
+                    if (coordinates) {
+                        const [lat, lng] = coordinates.split(', ');
+                        const url = `https://www.google.com/maps?q=${lat},${lng}`;
+                        const text = `EMERGENCY LOCATION SHARE (${currentRecipient}): I'm at ${url}`;
+
+                        shareBtn.innerHTML = '<i class="fas fa-check-circle me-2"></i> LOCATION SENT';
+                        shareBtn.classList.remove('btn-danger');
+                        shareBtn.classList.add('btn-success');
+
+                        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+
+                        setTimeout(() => {
+                            if (locationModal) locationModal.hide();
+                            setTimeout(() => {
+                                shareBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i> CONFIRM SHARE';
+                                shareBtn.classList.remove('btn-success');
+                                shareBtn.classList.add('btn-danger');
+                            }, 1000);
+                        }, 1000);
+                    }
+                });
+            }
+
+
+            const addCardBtn = document.getElementById('addContactCard');
+            const contactModal = document.getElementById('addContactModal');
+            const closeBtn = document.getElementById('closeAddContactModal');
+            const cancelBtn = document.getElementById('cancelAddContact');
+
+            if (addCardBtn && contactModal) {
+                addCardBtn.addEventListener('click', () => contactModal.classList.add('active'));
+            }
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => contactModal.classList.remove('active'));
+            }
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', () => contactModal.classList.remove('active'));
+            }
+
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const name = document.getElementById('contactName').value;
+                    const relationship = document.getElementById('contactRelationship').value || 'Emergency Contact';
+                    const phone = document.getElementById('contactPhone').value;
+                    const email = document.getElementById('contactEmail').value;
+
+                    saveContactToLocalStorage({ name, relationship, phone, email });
+                    addNewContact(name, relationship, phone, email);
+
+                    this.reset();
+                    contactModal.classList.remove('active');
+                });
+            }
+
+            function saveContactToLocalStorage(contact) {
+                let contacts = JSON.parse(localStorage.getItem('safetyContacts')) || [];
+                contacts.push(contact);
+                localStorage.setItem('safetyContacts', JSON.stringify(contacts));
+            }
+
+            function addNewContact(name, relationship, phone, email) {
+                const networkContainer = document.getElementById('safetyNetworkContainer');
+                if (!networkContainer) return;
+
+                const initials = getInitials(name);
+                const newContact = document.createElement('div');
+                newContact.className = 'col-md-6 col-lg-3 fade-in';
+                newContact.innerHTML = `
+            <div class="network-card" data-tilt data-tilt-scale="1.05">
+                <div class="network-avatar">${initials}</div>
+                <h5>${name}</h5>
+                <p class="text-muted">${relationship}</p>
+                <p>Phone: ${phone} ${email ? `<br>Email: ${email}` : ''}</p>
+            </div>
+        `;
+                networkContainer.insertBefore(newContact, document.getElementById('addContactCard').parentNode);
+
+                $(newContact.querySelector('.network-card')).tilt({
+                    glare: true,
+                    maxGlare: 0.2,
+                    reset: false
+                });
+
+                setTimeout(() => newContact.classList.add('show'), 50);
+                alert('New contact added to your safety network!');
+            }
+
+            function getInitials(name) {
+                return name.split(' ').map(part => part[0]).join('').toUpperCase().substring(0, 2);
+            }
+
+            window.addEventListener('click', function (e) {
+                if (e.target.classList.contains('popup-modal')) {
+                    e.target.classList.remove('active');
+                }
+            });
+
+
+            const panicBtn = document.getElementById('panicButton');
+            const sirenModal = document.getElementById('sirenModal');
+            const sirenClose = document.getElementById('closeSirenModal');
+
+            if (panicBtn && sirenModal && sirenClose) {
+                panicBtn.addEventListener('click', function () {
+                    sirenModal.classList.add('active');
+                    playSiren();
+
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('btn-pulse');
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 1000);
+
+                    setTimeout(() => {
+                        console.log("Emergency alerts sent to all contacts");
+                        console.log("Location shared with emergency services");
+                    }, 2000);
+                });
+
+                sirenClose.addEventListener('click', function () {
+                    sirenModal.classList.remove('active');
+                });
+            }
+
+            function playSiren() {
+                const sirenSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3');
+                sirenSound.loop = true;
+                sirenSound.play();
+                sirenClose.addEventListener('click', () => sirenSound.pause());
+            }
+
+
+            setTimeout(() => {
+                const statusLight = document.querySelector('.status-light');
+                const statusText = document.querySelector('.status-text');
+
+                if (statusLight && statusText) {
+                    statusLight.style.animation = 'none';
+                    statusLight.style.backgroundColor = 'yellow';
+                    statusText.textContent = 'SYSTEM CHECK';
+
+                    setTimeout(() => {
+                        statusLight.style.animation = 'statusPulse 2s infinite';
+                        statusLight.style.backgroundColor = '#00ff00';
+                        statusText.textContent = 'SYSTEM ONLINE';
+                    }, 1500);
+                }
+            }, 2000);
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            const dropdown = document.getElementById('vaultkitDropdown');
+
+
+            hamburger.addEventListener('click', function (e) {
+                e.stopPropagation();
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+
+
+            if (dropdownToggle) {
+                dropdownToggle.addEventListener('click', function (e) {
+                    if (window.innerWidth <= 992) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            }
+
+
+            document.addEventListener('click', function (e) {
+                if (window.innerWidth <= 992) {
+                    if (!e.target.closest('.navbar') && navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        hamburger.classList.remove('active');
+                    }
+                    if (!e.target.closest('.dropdown') && dropdown.classList.contains('active')) {
+                        dropdown.classList.remove('active');
+                    }
+                }
+            });
+
+
+            const dropdownItems = document.querySelectorAll('.dropdown-content a');
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    if (window.innerWidth <= 992) {
+                        dropdown.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+
+        window.addEventListener('resize', function () {
+            const navLinks = document.getElementById('navLinks');
+            const dropdown = document.getElementById('vaultkitDropdown');
+            const hamburger = document.getElementById('hamburger');
+
+            if (window.innerWidth > 992) {
+                navLinks.classList.remove('active');
+                dropdown.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+    </script>
+
+    <script>
+        let map;
+        let leafletMap;
+
+        function initMap() {
+            try {
+
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: { lat: 0, lng: 0 },
+                    zoom: 15,
+                    styles: []
+                });
+                console.log("Google Maps loaded successfully");
+            } catch (error) {
+                console.error("Google Maps error:", error);
+                loadLeafletMap();
+            }
+        }
+
+        function loadLeafletMap() {
+
+            leafletMap = L.map('map').setView([0, 0], 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(leafletMap);
+
+            console.log("Using Leaflet as fallback");
+        }
+
+
+        window.gm_authFailure = function () {
+            console.log("Google Maps authentication failed");
+            loadLeafletMap();
+        };
+
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+
+                if (map) {
+
+                    map.setCenter({ lat, lng });
+                    new google.maps.Marker({ position: { lat, lng }, map });
+                } else if (leafletMap) {
+
+                    leafletMap.setView([lat, lng], 15);
+                    L.marker([lat, lng]).addTo(leafletMap);
+                }
+            });
+        }
+    </script>
+
+
+    <script src="Jquery Validation/dist/jquery.validate.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $(".newsletter-form").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    email: {
+                        required: "Please enter your email address",
+                        email: "Please enter a valid email address"
+                    }
+                },
+                errorElement: "div",
+                errorClass: "invalid-feedback",
+                highlight: function (element, errorClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                },
+                submitHandler: function (form) {
+
+                    alert("Thank you for subscribing!");
+                    form.reset();
+                    return false;
+                }
+            });
+        });
+    </script>
+
+
+
+
+<script>
+class SafeRouteNavigator {
+    constructor() {
+        this.currentLocation = '';
+        this.destination = '';
+        this.travelMode = 'driving';
+        this.init();
+    }
+
+    init() {
+        this.loadSavedData();
+        this.bindEvents();
+        this.detectLocation();
+    }
+
+    bindEvents() {
+        
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                this.travelMode = e.target.dataset.mode;
+                this.saveData();
+            });
+        });
+
+        
+        document.getElementById('detectLocationBtn').addEventListener('click', () => {
+            this.detectLocation();
+        });
+
+        
+        document.getElementById('findRouteBtn').addEventListener('click', () => {
+            this.findRoute();
+        });
+
+        
+        document.getElementById('currentLocation').addEventListener('input', (e) => {
+            this.currentLocation = e.target.value;
+            this.saveData();
+        });
+
+        document.getElementById('destination').addEventListener('input', (e) => {
+            this.destination = e.target.value;
+            this.saveData();
+        });
+    }
+
+    detectLocation() {
+        const btn = document.getElementById('detectLocationBtn');
+        const input = document.getElementById('currentLocation');
+        
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    
+                    this.reverseGeocode(lat, lng).then(address => {
+                        input.value = address;
+                        this.currentLocation = address;
+                        this.saveData();
+                        btn.innerHTML = '<i class="fas fa-crosshairs"></i>';
+                        this.showNotification('Location detected successfully!', 'success');
+                    });
+                },
+                (error) => {
+                    console.error('Geolocation error:', error);
+                    btn.innerHTML = '<i class="fas fa-crosshairs"></i>';
+                    this.showNotification('Unable to detect location. Please enter manually.', 'error');
+                }
+            );
+        } else {
+            btn.innerHTML = '<i class="fas fa-crosshairs"></i>';
+            this.showNotification('Geolocation is not supported by this browser.', 'error');
+        }
+    }
+
+    async reverseGeocode(lat, lng) {
+        
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(`${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+            }, 1000);
+        });
+    }
+
+    findRoute() {
+        const currentLoc = document.getElementById('currentLocation').value;
+        const dest = document.getElementById('destination').value;
+
+        if (!currentLoc || !dest) {
+            this.showNotification('Please enter both current location and destination.', 'error');
+            return;
+        }
+
+        this.showLoading(true);
+        
+        
+        setTimeout(() => {
+            this.calculateRoute(currentLoc, dest);
+            this.showLoading(false);
+        }, 2000);
+    }
+
+    calculateRoute(from, to) {
+        
+        this.updateMap(from, to);
+        
+        
+        const mockResults = {
+            time: this.generateRandomTime(),
+            distance: this.generateRandomDistance(),
+            safety: this.generateSafetyLevel()
+        };
+
+        this.displayRouteInfo(mockResults);
+        this.saveData();
+        this.showNotification('Route calculated successfully!', 'success');
+    }
+
+    updateMap(from, to) {
+        const iframe = document.getElementById('mapIframe');
+        const encodedFrom = encodeURIComponent(from);
+        const encodedTo = encodeURIComponent(to);
+        
+        
+        const newSrc = `https://www.google.com/maps/embed/v1/directions?key=YOUR_API_KEY&origin=${encodedFrom}&destination=${encodedTo}&mode=${this.travelMode}`;
+        
+        
+        iframe.src = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.1234567890123!2d-74.0059413!3d40.7127753!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzQ2LjAiTiA3NMKwMDAnMjEuNCJX!5e0!3m2!1sen!2sus!4v${Date.now()}`;
+    }
+
+    displayRouteInfo(results) {
+        document.getElementById('estimatedTime').textContent = results.time;
+        document.getElementById('distance').textContent = results.distance;
+        document.getElementById('safetyLevel').textContent = results.safety;
+        
+        const routeInfo = document.getElementById('routeInfo');
+        routeInfo.classList.add('show');
+    }
+
+    generateRandomTime() {
+        const minutes = Math.floor(Math.random() * 60) + 10;
+        return `${minutes} min`;
+    }
+
+    generateRandomDistance() {
+        const distance = (Math.random() * 20 + 1).toFixed(1);
+        return `${distance} km`;
+    }
+
+    generateSafetyLevel() {
+        const levels = ['High', 'Medium', 'Low'];
+        return levels[Math.floor(Math.random() * levels.length)];
+    }
+
+    showLoading(show) {
+        const spinner = document.getElementById('loadingSpinner');
+        const button = document.getElementById('findRouteBtn');
+        
+        if (show) {
+            spinner.style.display = 'block';
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Calculating...';
+        } else {
+            spinner.style.display = 'none';
+            button.disabled = false;
+            button.innerHTML = '<i class="fas fa-search"></i> Find Best Route';
+        }
+    }
+
+    showNotification(message, type) {
+        
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+            ${message}
+        `;
+        
+        Object.assign(notification.style, {
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            background: type === 'success' ? '#28a745' : '#dc3545',
+            color: 'white',
+            padding: '15px 20px',
+            borderRadius: '10px',
+            zIndex: '9999',
+            animation: 'slideInRight 0.3s ease',
+            boxShadow: '0 10px 25px rgba(0,0,0,0.3)'
+        });
+
+        document.body.appendChild(notification);
+
+       
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+
+    saveData() {
+        const data = {
+            currentLocation: document.getElementById('currentLocation').value,
+            destination: document.getElementById('destination').value,
+            travelMode: this.travelMode,
+            lastCalculated: Date.now()
+        };
+        
+        localStorage.setItem('safeRouteData', JSON.stringify(data));
+    }
+
+    loadSavedData() {
+        const saved = localStorage.getItem('safeRouteData');
+        if (saved) {
+            const data = JSON.parse(saved);
+            
+            document.getElementById('currentLocation').value = data.currentLocation || '';
+            document.getElementById('destination').value = data.destination || '';
+            
+            
+            if (data.travelMode) {
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.mode === data.travelMode) {
+                        btn.classList.add('active');
+                        this.travelMode = data.travelMode;
+                    }
+                });
+            }
+        }
+    }
+}
+
+
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOutRight {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+`;
+document.head.appendChild(style);
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    new SafeRouteNavigator();
+});
+
+
+function createParticles() {
+    const section = document.querySelector('.saferoute-section');
+    
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float ${Math.random() * 10 + 5}s linear infinite;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            z-index: 1;
+        `;
+        section.appendChild(particle);
+    }
+}
+
+
+const particleStyle = document.createElement('style');
+particleStyle.textContent = `
+    @keyframes float {
+        0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.3; }
+        90% { opacity: 0.3; }
+        100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+`;
+document.head.appendChild(particleStyle);
+
+
+document.addEventListener('DOMContentLoaded', createParticles);
+</script>
+
+
+</body>
+
+</html>

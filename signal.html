@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaultecho | Signal In </title>
+    <link rel="icon" type="image/png" href="favIcon-copy.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #d62839;
+            --dark-red: #911d2a;
+            --accent-color: #e63946;
+            --pure-black: #000000;
+            --dark-gray: #121212;
+            --medium-gray: #1d1d1d;
+            --light-gray: #2a2a2a;
+            --white: #FFFFFF;
+            --off-white: #f1f1f1;
+            --light-color: #f1faee;
+            --dark-blue: #1d3557;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:#121212;
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .signal-in-container {
+            max-width: 800px;
+            width: 95%;
+            margin: 1rem auto;
+            padding: 1.5rem;
+            background-color: var(--medium-gray);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(214, 40, 57, 0.2);
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .signal-in-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-top: 3.5rem;
+        }
+
+        .signal-in-header h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-red);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+        }
+
+        .signal-in-header p {
+            color: var(--off-white);
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            margin-bottom: 1.5rem;
+        }
+
+
+        .back-to-home {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: var(--white);
+            background-color: var(--primary-red);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-to-home:hover {
+            background-color: var(--dark-red);
+            transform: translateX(-3px);
+            color: var(--white);
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-to-home i {
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-home:hover i {
+            transform: translateX(-3px);
+        }
+
+
+        .form-label {
+            color: var(--off-white);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+
+        .form-control,
+        .form-select {
+            background-color: var(--light-gray);
+            border: 1px solid var(--light-gray);
+            color: var(--white);
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            width: 100%;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background-color: var(--light-gray);
+            color: var(--white);
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 0.25rem rgba(214, 40, 57, 0.25);
+        }
+
+        .form-control::placeholder {
+            color: #6c757d;
+            opacity: 0.7;
+        }
+
+        .required-field::after {
+            content: " *";
+            color: var(--primary-red);
+        }
+
+
+        .btn-signal {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            white-space: nowrap;
+        }
+
+        .btn-signal:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(214, 40, 57, 0.4);
+        }
+
+        .btn-signal:active {
+            transform: translateY(0);
+        }
+
+        .btn-previous {
+            background-color: var(--light-gray);
+            color: var(--off-white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            white-space: nowrap;
+        }
+
+        .btn-previous:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(29, 53, 87, 0.4);
+        }
+
+        .btn-previous:active {
+            transform: translateY(0);
+        }
+
+
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .file-upload-input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 1rem;
+            background-color: var(--light-gray);
+            border: 2px dashed var(--off-white);
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--primary-red);
+            background-color: rgba(214, 40, 57, 0.1);
+        }
+
+        .file-upload-icon {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-text {
+            color: var(--off-white);
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+        }
+
+        .file-name {
+            color: var(--primary-red);
+            font-weight: 500;
+            margin-top: 0.5rem;
+            display: none;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            word-break: break-word;
+        }
+
+
+        .age-verification {
+            background-color: var(--light-gray);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-red);
+        }
+
+        .age-verification h5 {
+            color: var(--primary-red);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+        }
+
+        .age-verification p {
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+        }
+
+
+        .form-check-input {
+            background-color: var(--light-gray);
+            border: 1px solid var(--off-white);
+            margin-top: 0.2rem;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-red);
+            border-color: var(--primary-red);
+        }
+
+        .form-check-label {
+            color: var(--off-white);
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            margin-left: 0.3rem;
+        }
+
+
+        .validation-message {
+            color: var(--primary-red);
+            font-size: clamp(0.7rem, 3vw, 0.8rem);
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+
+        .welcome-modal {
+            background-color: var(--medium-gray);
+            color: var(--white);
+        }
+
+        .welcome-modal .modal-header {
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .welcome-modal .modal-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-red);
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+        }
+
+        .welcome-modal .modal-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .welcome-modal .modal-footer {
+            border-top: 1px solid var(--light-gray);
+            justify-content: center;
+        }
+
+        .welcome-icon {
+            font-size: clamp(3rem, 10vw, 4rem);
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .greeting-message {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 1.5rem;
+            color: var(--off-white);
+        }
+
+        .user-name {
+            color: var(--primary-red);
+            font-weight: 600;
+        }
+
+
+
+        .progress {
+            height: 6px;
+            background-color: var(--light-gray);
+            margin-bottom: 1.5rem;
+            border-radius: 3px;
+        }
+
+        .progress-bar {
+            background-color: var(--primary-red);
+            transition: width 0.5s ease;
+        }
+
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .step {
+            width: clamp(25px, 8vw, 30px);
+            height: clamp(25px, 8vw, 30px);
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            color: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+        }
+
+        .step.active {
+            background-color: var(--primary-red);
+            color: white;
+        }
+
+        .step.completed {
+            background-color: var(--dark-red);
+            color: white;
+        }
+
+        .step-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--light-gray);
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .step-line-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: var(--primary-red);
+            transition: width 0.5s ease;
+        }
+
+
+        .form-section {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-5px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(5px);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+
+        .section-title {
+            color: var(--primary-red);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+        }
+
+
+        @media (max-width: 576px) {
+            .signal-in-container {
+                padding: 1rem;
+                margin: 0.5rem auto;
+                border-radius: 0;
+                width: 98%;
+            }
+
+            .signal-in-header {
+                padding-top: 3rem;
+            }
+
+            .btn-signal,
+            .btn-previous {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .row {
+                flex-direction: column;
+            }
+
+            .col-md-6 {
+                width: 100%;
+            }
+
+            .d-flex.justify-content-between {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .back-to-home {
+                top: 10px;
+                left: 10px;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .form-control,
+            .form-select {
+                padding: 0.6rem 0.8rem;
+            }
+
+            .file-upload-label {
+                padding: 0.8rem;
+            }
+        }
+
+        @media (min-width: 577px) and (max-width: 768px) {
+            .signal-in-container {
+                padding: 1.5rem;
+                width: 95%;
+            }
+
+            .btn-signal,
+            .btn-previous {
+                padding: 0.7rem 1.2rem;
+            }
+
+            .back-to-home {
+                top: 15px;
+                left: 15px;
+            }
+        }
+
+
+        @media (max-height: 600px) {
+            .signal-in-container {
+                margin: 0.5rem auto;
+                padding: 1rem;
+            }
+
+            .signal-in-header h1 {
+                margin-bottom: 0.3rem;
+                font-size: 1.5rem;
+            }
+
+            .signal-in-header p {
+                margin-bottom: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .form-control,
+            .form-select {
+                padding: 0.5rem 0.75rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .btn-signal,
+            .btn-previous {
+                margin-top: 0.75rem;
+                padding: 0.6rem 1rem;
+            }
+
+            .signal-in-header {
+                padding-top: 2.5rem;
+            }
+        }
+
+
+        @media (max-width: 360px) {
+            .signal-in-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .back-to-home {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .btn-signal,
+            .btn-previous {
+                font-size: 0.7rem;
+            }
+        }
+
+
+        @media (min-width: 992px) {
+            .signal-in-container {
+                margin: 2rem auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signal-in-container">
+        <div class="signal-in-header">
+            <a href="index.html" class="back-to-home">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <h1><i class="fas fa-fingerprint"></i> Signal In</h1>
+            <p>Complete your authentication to access Vaultecho's safety resources</p>
+        </div>
+
+        <div class="step-indicator">
+            <div class="step active" id="step1">1</div>
+            <div class="step" id="step2">2</div>
+            <div class="step" id="step3">3</div>
+            <div class="step-line">
+                <div class="step-line-progress" id="step-line-progress" style="width: 0%"></div>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="progress-bar" id="form-progress" role="progressbar" style="width: 0%" aria-valuenow="0"
+                aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <form id="signalInForm" novalidate>
+
+            <div class="form-section active" id="section1">
+                <h4 class="section-title mb-3"><i class="fas fa-user-circle me-2"></i>PERSONAL INFORMATION</h4>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label required-field">First Name</label>
+                        <input type="text" class="form-control" id="firstName" required>
+                        <div class="validation-message" id="firstNameError">Please enter your first name</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label required-field">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" required>
+                        <div class="validation-message" id="lastNameError">Please enter your last name</div>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="email" class="form-label required-field">Email Address</label>
+                        <input type="email" class="form-control" id="email" required>
+                        <div class="validation-message" id="emailError">Please enter a valid email address</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="phone" class="form-label required-field">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" required>
+                        <div class="validation-message" id="phoneError">Please enter a valid phone number</div>
+                    </div>
+                </div>
+
+                <label for="address" class="form-label required-field">Address</label>
+                <input type="text" class="form-control" id="address" required>
+                <div class="validation-message" id="addressError">Please enter your address</div>
+
+                <label for="emergencyContact" class="form-label required-field">Emergency Contact Number</label>
+                <input type="tel" class="form-control" id="emergencyContact" required>
+                <div class="validation-message" id="emergencyContactError">Please enter an emergency contact number
+                </div>
+
+                <div class="d-flex justify-content-between mt-4 flex-wrap gap-2">
+                    <button type="button" class="btn btn-previous flex-grow-1" disabled>
+                        <i class="fas fa-arrow-left me-2"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-signal flex-grow-1" id="nextToSection2">
+                        Next <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="form-section" id="section2">
+                <h4 class="section-title mb-3"><i class="fas fa-id-card me-2"></i>AGE VERIFICATION</h4>
+
+                <div class="age-verification">
+                    <h5><i class="fas fa-user-shield me-2"></i>AGE RESTRICTION</h5>
+                    <p>Vaultecho is committed to safety for all age groups. Please verify your age to proceed.</p>
+
+                    <div class="mb-3">
+                        <label for="dob" class="form-label required-field">Date of Birth</label>
+                        <input type="date" class="form-control" id="dob" required>
+                        <div class="validation-message" id="dobError">Please enter your date of birth</div>
+                    </div>
+
+                    <div id="under18Fields" style="display: none;">
+                        <div class="mb-3">
+                            <label class="form-label required-field">Parent/Guardian Consent</label>
+                            <div class="file-upload">
+                                <input type="file" class="file-upload-input" id="parentConsent" accept="image/*,.pdf">
+                                <label for="parentConsent" class="file-upload-label">
+                                    <div class="file-upload-icon"><i class="fas fa-file-signature"></i></div>
+                                    <div class="file-upload-text">Upload Parent/Guardian Consent Form</div>
+                                    <div class="file-name" id="parentConsentFileName"></div>
+                                </label>
+                            </div>
+                            <div class="validation-message" id="parentConsentError">Please upload parent/guardian
+                                consent</div>
+                        </div>
+                    </div>
+
+                    <div id="over18Fields" style="display: none;">
+                        <div class="mb-3">
+                            <label class="form-label required-field">Government Issued ID</label>
+                            <div class="file-upload">
+                                <input type="file" class="file-upload-input" id="idProof" accept="image/*,.pdf"
+                                    required>
+                                <label for="idProof" class="file-upload-label">
+                                    <div class="file-upload-icon"><i class="fas fa-id-card"></i></div>
+                                    <div class="file-upload-text">Upload Government Issued ID (Front)</div>
+                                    <div class="file-name" id="idProofFileName"></div>
+                                </label>
+                            </div>
+                            <div class="validation-message" id="idProofError">Please upload your ID proof</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label required-field">Facial Verification</label>
+                    <div class="file-upload">
+                        <input type="file" class="file-upload-input" id="facePhoto" accept="image/*" capture="user"
+                            required>
+                        <label for="facePhoto" class="file-upload-label">
+                            <div class="file-upload-icon"><i class="fas fa-camera"></i></div>
+                            <div class="file-upload-text">Take or Upload a Clear Face Photo</div>
+                            <div class="file-name" id="facePhotoFileName"></div>
+                        </label>
+                    </div>
+                    <div class="validation-message" id="facePhotoError">Please upload your face photo</div>
+                    <small class="text-white">This helps us verify your identity and ensure account security.</small>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4 flex-wrap gap-2">
+                    <button type="button" class="btn btn-previous flex-grow-1" id="backToSection1">
+                        <i class="fas fa-arrow-left me-2"></i>Previous
+                    </button>
+                    <button type="button" class="btn btn-signal flex-grow-1" id="nextToSection3">
+                        Next <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="form-section" id="section3">
+                <h4 class="section-title mb-3"><i class="fas fa-shield-alt me-2"></i>SAFETY PREFERENCES</h4>
+
+                <div class="mb-4">
+                    <label class="form-label required-field">Preferred Emergency Contact Method</label>
+                    <select class="form-select" id="contactMethod" required>
+                        <option value="" selected disabled>Select preferred method</option>
+                        <option value="sms">SMS Text Message</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="call">Phone Call</option>
+                        <option value="email">Email</option>
+                    </select>
+                    <div class="validation-message" id="contactMethodError">Please select a contact method</div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label required-field">Safety Notifications</label>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="crimeAlerts" checked>
+                        <label class="form-check-label" for="crimeAlerts">Crime alerts in my area</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="weatherAlerts" checked>
+                        <label class="form-check-label" for="weatherAlerts">Severe weather alerts</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="safetyTips" checked>
+                        <label class="form-check-label" for="safetyTips">Weekly safety tips</label>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Additional Safety Information (Optional)</label>
+                    <textarea class="form-control" id="additionalInfo" rows="3"
+                        placeholder="Any medical conditions, special needs, or other safety concerns we should know about..."></textarea>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="termsAgreement" required>
+                    <label class="form-check-label" for="termsAgreement">I agree to Vaultecho's <a href="#"
+                            style="color: var(--primary-red);">Terms of Service</a> and <a href="#"
+                            style="color: var(--primary-red);">Privacy Policy</a></label>
+                    <div class="validation-message" id="termsAgreementError">You must agree to the terms to proceed
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4 flex-wrap gap-2">
+                    <button type="button" class="btn btn-previous flex-grow-1" id="backToSection2">
+                        <i class="fas fa-arrow-left me-2"></i>Previous
+                    </button>
+                    <button type="submit" class="btn btn-signal flex-grow-1" id="submitForm">
+                        <i class="fas fa-check-circle me-2"></i>Complete Signal In
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="modal fade" id="welcomeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content welcome-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">WELCOME TO VAULTECHO</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="welcome-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4 class="section-title">SIGNAL IN COMPLETE</h4>
+                    <p class="greeting-message">Welcome <span class="user-name" id="welcomeUserName">User</span> to your
+                        personalized safety hub!</p>
+                    <p>Your safety profile has been successfully created and verified.</p>
+                    <p>You now have full access to Vaultecho's safety resources.</p>
+                    <div class="mt-4">
+                        <img src="" id="userFacePreview" class="img-thumbnail rounded-circle" width="100" height="100"
+                            style="object-fit: cover; border: 2px solid var(--primary-red);">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="index.html" class="btn btn-signal">Welcome In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const section1 = document.getElementById('section1');
+            const section2 = document.getElementById('section2');
+            const section3 = document.getElementById('section3');
+            const nextToSection2 = document.getElementById('nextToSection2');
+            const nextToSection3 = document.getElementById('nextToSection3');
+            const backToSection1 = document.getElementById('backToSection1');
+            const backToSection2 = document.getElementById('backToSection2');
+            const submitForm = document.getElementById('submitForm');
+            const form = document.getElementById('signalInForm');
+            const welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'));
+            const welcomeUserName = document.getElementById('welcomeUserName');
+
+
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const step3 = document.getElementById('step3');
+            const stepLineProgress = document.getElementById('step-line-progress');
+            const formProgress = document.getElementById('form-progress');
+
+
+            const fileUploadInputs = document.querySelectorAll('.file-upload-input');
+            const parentConsent = document.getElementById('parentConsent');
+            const idProof = document.getElementById('idProof');
+            const facePhoto = document.getElementById('facePhoto');
+            const dobInput = document.getElementById('dob');
+
+
+            const under18Fields = document.getElementById('under18Fields');
+            const over18Fields = document.getElementById('over18Fields');
+
+
+            const today = new Date();
+            const maxDate = new Date(today.getFullYear() - 13, today.getMonth(), today.getDate());
+            dobInput.max = maxDate.toISOString().split('T')[0];
+
+
+            dobInput.addEventListener('change', function () {
+                const dob = new Date(this.value);
+                const age = calculateAge(dob);
+
+                if (age < 18) {
+                    under18Fields.style.display = 'block';
+                    over18Fields.style.display = 'none';
+                    parentConsent.required = true;
+                    idProof.required = false;
+                } else {
+                    under18Fields.style.display = 'none';
+                    over18Fields.style.display = 'block';
+                    parentConsent.required = false;
+                    idProof.required = true;
+                }
+            });
+
+            function calculateAge(birthDate) {
+                const diff = Date.now() - birthDate.getTime();
+                const ageDate = new Date(diff);
+                return Math.abs(ageDate.getUTCFullYear() - 1970);
+            }
+
+
+            fileUploadInputs.forEach(input => {
+                input.addEventListener('change', function () {
+                    const fileName = this.files[0] ? this.files[0].name : 'No file selected';
+                    const fileDisplay = this.parentElement.querySelector('.file-name');
+
+                    if (this.files[0]) {
+                        fileDisplay.textContent = fileName;
+                        fileDisplay.style.display = 'block';
+
+
+                        if (this.id === 'facePhoto') {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                document.getElementById('userFacePreview').src = e.target.result;
+                            }
+                            reader.readAsDataURL(this.files[0]);
+                        }
+                    } else {
+                        fileDisplay.style.display = 'none';
+                    }
+                });
+            });
+
+
+            nextToSection2.addEventListener('click', function () {
+                if (validateSection1()) {
+                    section1.classList.remove('active');
+                    section2.classList.add('active');
+                    updateProgress(1, 33);
+                    updateStepIndicator(2);
+
+
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+
+            backToSection1.addEventListener('click', function () {
+                section2.classList.remove('active');
+                section1.classList.add('active');
+                updateProgress(1, 0);
+                updateStepIndicator(1);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            nextToSection3.addEventListener('click', function () {
+                if (validateSection2()) {
+                    section2.classList.remove('active');
+                    section3.classList.add('active');
+                    updateProgress(2, 66);
+                    updateStepIndicator(3);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+
+            backToSection2.addEventListener('click', function () {
+                section3.classList.remove('active');
+                section2.classList.add('active');
+                updateProgress(2, 33);
+                updateStepIndicator(2);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                if (validateSection3()) {
+
+                    const userData = saveFormData();
+
+
+                    welcomeUserName.textContent = userData.firstName;
+
+
+                    welcomeModal.show();
+
+
+                    setTimeout(() => {
+                        form.reset();
+                        resetFileUploads();
+                        section3.classList.remove('active');
+                        section1.classList.add('active');
+                        updateProgress(1, 0);
+                        updateStepIndicator(1);
+                    }, 3000);
+                }
+            });
+
+            function saveFormData() {
+                const formData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    address: document.getElementById('address').value,
+                    emergencyContact: document.getElementById('emergencyContact').value,
+                    dob: document.getElementById('dob').value,
+                    contactMethod: document.getElementById('contactMethod').value,
+                    crimeAlerts: document.getElementById('crimeAlerts').checked,
+                    weatherAlerts: document.getElementById('weatherAlerts').checked,
+                    safetyTips: document.getElementById('safetyTips').checked,
+                    additionalInfo: document.getElementById('additionalInfo').value,
+                    timestamp: new Date().toISOString()
+                };
+
+                localStorage.setItem('vaultechoUserData', JSON.stringify(formData));
+                console.log('Form data saved to local storage:', formData);
+                return formData;
+            }
+
+            function resetFileUploads() {
+                document.querySelectorAll('.file-name').forEach(el => {
+                    el.style.display = 'none';
+                });
+            }
+
+            function updateProgress(currentSection, percent) {
+                formProgress.style.width = percent + '%';
+                formProgress.setAttribute('aria-valuenow', percent);
+            }
+
+            function updateStepIndicator(activeStep) {
+
+                step1.className = 'step';
+                step2.className = 'step';
+                step3.className = 'step';
+
+
+                if (activeStep >= 1) {
+                    step1.className = 'step completed';
+                    stepLineProgress.style.width = '0%';
+                }
+                if (activeStep >= 2) {
+                    step1.className = 'step completed';
+                    step2.className = 'step completed';
+                    stepLineProgress.style.width = '50%';
+                }
+                if (activeStep >= 3) {
+                    step1.className = 'step completed';
+                    step2.className = 'step completed';
+                    step3.className = 'step completed';
+                    stepLineProgress.style.width = '100%';
+                }
+
+
+                if (activeStep === 1) step1.className = 'step active';
+                if (activeStep === 2) step2.className = 'step active';
+                if (activeStep === 3) step3.className = 'step active';
+            }
+
+
+            function validateSection1() {
+                let isValid = true;
+
+
+                if (!document.getElementById('firstName').value.trim()) {
+                    showError('firstNameError');
+                    isValid = false;
+                } else {
+                    hideError('firstNameError');
+                }
+
+
+                if (!document.getElementById('lastName').value.trim()) {
+                    showError('lastNameError');
+                    isValid = false;
+                } else {
+                    hideError('lastNameError');
+                }
+
+
+                const email = document.getElementById('email').value;
+                if (!email || !validateEmail(email)) {
+                    showError('emailError');
+                    isValid = false;
+                } else {
+                    hideError('emailError');
+                }
+
+
+                if (!document.getElementById('phone').value.trim()) {
+                    showError('phoneError');
+                    isValid = false;
+                } else {
+                    hideError('phoneError');
+                }
+
+
+                if (!document.getElementById('address').value.trim()) {
+                    showError('addressError');
+                    isValid = false;
+                } else {
+                    hideError('addressError');
+                }
+
+
+                if (!document.getElementById('emergencyContact').value.trim()) {
+                    showError('emergencyContactError');
+                    isValid = false;
+                } else {
+                    hideError('emergencyContactError');
+                }
+
+                return isValid;
+            }
+
+            function validateSection2() {
+                let isValid = true;
+
+
+                if (!document.getElementById('dob').value) {
+                    showError('dobError');
+                    isValid = false;
+                } else {
+                    hideError('dobError');
+
+
+                    const dob = new Date(document.getElementById('dob').value);
+                    const age = calculateAge(dob);
+
+                    if (age < 18 && !parentConsent.files[0]) {
+                        showError('parentConsentError');
+                        isValid = false;
+                    } else {
+                        hideError('parentConsentError');
+                    }
+
+                    if (age >= 18 && !idProof.files[0]) {
+                        showError('idProofError');
+                        isValid = false;
+                    } else {
+                        hideError('idProofError');
+                    }
+                }
+
+
+                if (!facePhoto.files[0]) {
+                    showError('facePhotoError');
+                    isValid = false;
+                } else {
+                    hideError('facePhotoError');
+                }
+
+                return isValid;
+            }
+
+            function validateSection3() {
+                let isValid = true;
+
+
+                if (!document.getElementById('contactMethod').value) {
+                    showError('contactMethodError');
+                    isValid = false;
+                } else {
+                    hideError('contactMethodError');
+                }
+
+
+                if (!document.getElementById('termsAgreement').checked) {
+                    showError('termsAgreementError');
+                    isValid = false;
+                } else {
+                    hideError('termsAgreementError');
+                }
+
+                return isValid;
+            }
+
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            function showError(errorId) {
+                const errorElement = document.getElementById(errorId);
+                errorElement.style.display = 'block';
+                const inputElement = errorElement.parentElement.querySelector('.form-control, .form-select, .file-upload-label');
+                if (inputElement) {
+                    inputElement.classList.add('shake');
+
+                    setTimeout(() => {
+                        inputElement.classList.remove('shake');
+                    }, 500);
+                }
+            }
+
+            function hideError(errorId) {
+                document.getElementById(errorId).style.display = 'none';
+            }
+
+
+            updateProgress(1, 0);
+            updateStepIndicator(1);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VaultEcho | Contact Us </title>
+
+  <link rel="icon" type="image/png" href="favIcon-copy.png">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    :root {
+      --primary-red: #d62839;
+      --dark-red: #911d2a;
+      --accent-color: #e63946;
+      --pure-black: #000000;
+      --dark-gray: #121212;
+      --medium-gray: #1d1d1d;
+      --light-gray: #2a2a2a;
+      --white: #FFFFFF;
+      --off-white: #f1f1f1;
+      --light-color: #f1faee;
+      --dark-blue: #1d3557;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dark-gray);
+      color: var(--white);
+      padding-top: 140px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .navbar-brand,
+    .footer-column h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      background-color: #2926264b;
+      border-bottom: 2px solid var(--light-gray);
+      height: 120px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(18px);
+      z-index: 1000;
+    }
+
+    .navbar-brand img {
+      height: 90px;
+      width: auto;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      font-size: 1.1rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      position: relative;
+      padding: 1.2rem 0.8rem;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-red);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 1rem;
+      left: 0.8rem;
+      background-color: var(--primary-red);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: calc(100% - 1.6rem);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: var(--medium-gray);
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content a {
+      padding: 12px 16px;
+      display: block;
+      color: var(--off-white);
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--light-gray);
+      color: var(--primary-red);
+    }
+
+    .dropdown-content a::after {
+      display: none;
+    }
+
+    .btn-signal {
+      background-color: var(--primary-red);
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .btn-signal:hover {
+      background-color: var(--dark-red);
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      color: white;
+      font-size: 1.8rem;
+      z-index: 1001;
+    }
+
+    @media (max-width: 992px) {
+      .navbar {
+        height: 120px;
+        padding: 0 15px;
+      }
+
+      .navbar-brand img {
+        height: 100px;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 118px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: var(--dark-gray);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        transition: left 0.3s ease;
+        z-index: 1000;
+        overflow-y: auto;
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .nav-links li {
+        width: 100%;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid var(--medium-gray);
+      }
+
+      .nav-links a {
+        padding: 0.5rem 0;
+      }
+
+      .nav-links a::after {
+        bottom: 0.3rem;
+        left: 0;
+      }
+
+      .dropdown-content {
+        position: static;
+        display: none;
+        width: 100%;
+        box-shadow: none;
+        margin-top: 0.5rem;
+        background-color: var(--medium-gray);
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: none;
+      }
+
+      .dropdown.active .dropdown-content {
+        display: block;
+      }
+
+      .btn-signal {
+        width: 100%;
+        justify-content: center;
+        padding: 10px;
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .navbar-brand img {
+        height: 85px;
+      }
+
+      .hamburger {
+        font-size: 1.6rem;
+      }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--white);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      color: var(--primary-red);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--accent-color);
+      margin-top: 30px;
+      position: relative;
+      display: inline-block;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--primary-red);
+      transition: width 0.3s ease;
+    }
+
+    h2:hover::after {
+      width: 100%;
+    }
+
+    p {
+      color: var(--off-white);
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-out;
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+
+
+    .contact-hero {
+      position: relative;
+      background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.719)),
+        url('https://images.unsplash.com/photo-1534536281715-e28d76689b4d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
+      background-size: cover;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      padding: 4rem 0;
+      margin-top: -20px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: 100%;
+      padding: 0 1.5rem;
+    }
+
+    .hero-title {
+      color: var(--primary-red);
+      font-size: clamp(2rem, 6vw, 4rem);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-subtitle {
+      color: var(--off-white);
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--primary-red);
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      margin: 0.5rem;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      border: none;
+      cursor: pointer;
+    }
+
+    .hero-cta:hover {
+      background-color: var(--dark-red);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(214, 40, 57, 0.4);
+      color: white;
+    }
+
+    .hero-cta i {
+      margin-right: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    .hero-scroll-down {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--off-white);
+      font-size: 1.5rem;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .hero-scroll-down:hover {
+      opacity: 1;
+      color: var(--primary-red);
+    }
+
+    @keyframes bounce {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0) translateX(-50%);
+      }
+
+      40% {
+        transform: translateY(-20px) translateX(-50%);
+      }
+
+      60% {
+        transform: translateY(-10px) translateX(-50%);
+      }
+    }
+
+
+    @media (max-width: 768px) {
+      .contact-hero {
+        min-height: 60vh;
+        padding: 3rem 0;
+      }
+
+      .hero-title {
+        margin-bottom: 1rem;
+      }
+
+      .hero-subtitle {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .contact-hero {
+        min-height: 50vh;
+        padding: 2rem 0;
+      }
+
+      .hero-cta {
+        padding: 0.7rem 1.5rem;
+        margin: 0.3rem;
+        display: block;
+        width: 80%;
+        margin: 0.5rem auto;
+      }
+    }
+
+
+    .contact-intro {
+      background-color: var(--medium-gray);
+      padding: 30px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      border-left: 4px solid var(--primary-red);
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 0.2s forwards;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .contact-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .contact-card {
+      flex: 1 1 300px;
+      background-color: var(--medium-gray);
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-top: 3px solid var(--primary-red);
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    .contact-card:nth-child(1) {
+      animation: fadeInUp 0.8s ease-out 0.4s forwards;
+    }
+
+    .contact-card:nth-child(2) {
+      animation: fadeInUp 0.8s ease-out 0.6s forwards;
+    }
+
+    .contact-card:nth-child(3) {
+      animation: fadeInUp 0.8s ease-out 0.8s forwards;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-10px) !important;
+      box-shadow: 0 10px 25px rgba(214, 40, 57, 0.3);
+      border-top: 3px solid var(--accent-color);
+    }
+
+    .contact-card h3 {
+      color: var(--primary-red);
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .contact-card:hover h3 {
+      color: var(--accent-color);
+    }
+
+    .contact-card i {
+      color: var(--accent-color);
+      margin-right: 10px;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-card:hover i {
+      transform: scale(1.2);
+    }
+
+    .contact-card p {
+      transition: color 0.3s ease;
+    }
+
+    .contact-card:hover p {
+      color: var(--white);
+    }
+
+
+    .contact-form-container {
+      background-color: var(--medium-gray);
+      padding: 30px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 1s forwards;
+      box-shadow: 0 4px 13px rgb(88, 7, 7);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .form-group:hover {
+      transform: translateX(5px);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--off-white);
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .form-group:hover label {
+      color: var(--white);
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--light-gray);
+      border: 1px solid var(--light-gray);
+      border-radius: 4px;
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 2px rgba(214, 40, 57, 0.3);
+    }
+
+    input:hover,
+    textarea:hover,
+    select:hover {
+      border-color: var(--accent-color);
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    button {
+      background-color: var(--primary-red);
+      color: var(--white);
+      border: none;
+      padding: 12px 25px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: var(--dark-red);
+      transition: left 0.4s ease;
+      z-index: -1;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(214, 40, 57, 0.4);
+    }
+
+    button:hover::before {
+      left: 0;
+    }
+
+    .form-success {
+      display: none;
+      background-color: rgba(29, 53, 87, 0.8);
+      color: var(--light-color);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      text-align: center;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+
+    .faq-section {
+      background-color: var(--medium-gray);
+      padding: 30px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 1.2s forwards;
+      box-shadow: 0 4px 15px rgba(214, 40, 57, 0.2);
+    }
+
+    .faq-section h2 {
+      color: var(--primary-red);
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .faq-container {
+      margin-top: 20px;
+    }
+
+    .faq-item {
+      background-color: var(--dark-gray);
+      border-left: 3px solid var(--accent-color);
+      margin-bottom: 15px;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(230, 57, 70, 0.2);
+    }
+
+    .faq-question {
+      padding: 15px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+    }
+
+    .faq-question h3 {
+      color: var(--white);
+      margin: 0;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    .faq-item:hover .faq-question h3 {
+      color: var(--accent-color);
+    }
+
+    .faq-question .icon {
+      color: var(--primary-red);
+      transition: transform 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .faq-item.active .faq-question .icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      background-color: var(--medium-gray);
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 15px 20px;
+      max-height: 500px;
+    }
+
+    .faq-answer p {
+      color: var(--off-white);
+      margin-bottom: 10px;
+    }
+
+    .faq-answer ul,
+    .faq-answer ol {
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    .faq-answer li {
+      color: var(--off-white);
+      margin-bottom: 8px;
+    }
+
+
+    .footer {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      padding: 4rem 2rem 1.5rem;
+      border-top: 1px solid rgba(214, 40, 57, 0.5);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out forwards;
+      animation-delay: 0.3s;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(214, 40, 57, 0.1) 0%, rgba(0, 0, 0, 0) 50%);
+      z-index: 0;
+    }
+
+    .footer::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(214, 40, 57, 0.6) 50%, transparent 100%);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 3rem;
+      position: relative;
+      z-index: 1;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .footer-logo-column {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .logo-container {
+      width: 200px;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container:hover {
+      transform: scale(1.03);
+    }
+
+    .footer-logo {
+      height: 120px;
+      filter: drop-shadow(0 2px 5px rgba(214, 40, 57, 0.3));
+    }
+
+    .footer-tagline {
+      color: var(--off-white);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 320px;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .footer-tagline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background: var(--primary-red);
+      border-radius: 3px;
+    }
+
+    .footer-newsletter {
+      margin-top: auto;
+    }
+
+    .footer-newsletter h4 {
+      color: var(--white);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .newsletter-form input {
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--white);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-form input:focus {
+      outline: none;
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 2px rgba(214, 40, 57, 0.2);
+    }
+
+    .newsletter-btn {
+      padding: 0.8rem 1.5rem;
+      background: var(--primary-red);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .newsletter-btn:hover {
+      background: #c52638;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(214, 40, 57, 0.3);
+    }
+
+    .footer-column h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-red), rgba(214, 40, 57, 0));
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .link-icon {
+      display: inline-block;
+      margin-right: 8px;
+      color: var(--primary-red);
+      transform: translateX(-5px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .contact-icon {
+      margin-top: 3px;
+    }
+
+    .contact-text {
+      flex: 1;
+    }
+
+    .contact-text a {
+      color: #d1d1d1;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-text a:hover {
+      color: var(--primary-red);
+    }
+
+    .footer-links a {
+      color: #d1d1d1;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+      position: relative;
+      padding: 0.2rem 0;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+      transform: translateX(5px);
+    }
+
+    .footer-links a:hover .link-icon {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      grid-column: 1 / -1;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-copyright {
+      color: #888;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-legal-links {
+      display: flex;
+      gap: 1rem;
+      margin-left: 1rem;
+    }
+
+    .footer-legal-links a {
+      color: #888;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-legal-links a:hover {
+      color: var(--primary-red);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-icon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: 0.5s;
+    }
+
+    .social-icon:hover::before {
+      left: 100%;
+    }
+
+    .social-icon:hover {
+      background: var(--primary-red);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 5px 15px rgba(214, 40, 57, 0.4);
+    }
+
+    .social-icon i {
+      color: var(--white);
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .social-icon:hover i {
+      transform: scale(1.1);
+    }
+
+
+    @media (max-width: 1024px) {
+      .footer-container {
+        grid-template-columns: 1.5fr repeat(3, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .footer-container {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-logo-column {
+        grid-column: 1 / -1;
+      }
+
+      .footer-newsletter {
+        max-width: 400px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer {
+        padding: 3rem 1.5rem 1.5rem;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+      }
+
+      .footer-copyright {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .footer-legal-links {
+        margin-left: 0;
+        justify-content: center;
+      }
+
+      .footer-newsletter {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .footer-social {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    .invalid-feedback {
+      color: #ffffff;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+
+    .is-invalid {
+      border-color: #ff6b6b !important;
+    }
+
+    .is-valid {
+      border-color: #51cf66 !important;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a href="index.html"><img src="Vaultecho-1.png" alt="VaultEcho Logo"></a>
+    </div>
+
+    <div class="hamburger" id="hamburger">
+      <i class="fas fa-bars"></i>
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+      <li>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      </li>
+      <li class="dropdown" id="vaultkitDropdown">
+        <a href="#" class="dropdown-toggle"><i class="fas fa-box-open"></i> VaultKit</a>
+        <div class="dropdown-content">
+          <a href="emergency.html"><i class="fas fa-tools"></i> Emergency Toolkit</a>
+          <a href="survival.html"><i class="fas fa-lightbulb"></i> Survival Tips</a>
+        </div>
+      </li>
+      <li>
+        <a href="echoalert.html"><i class="fas fa-bell"></i> EchoAlert</a>
+      </li>
+      <li>
+        <a href="community.html"><i class="fas fa-users"></i> Community</a>
+      </li>
+      <li>
+        <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+      </li>
+      <li>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      </li>
+      <li>
+        <a href="signal.html" class="btn-signal"><i class="fas fa-sign-in-alt"></i> SIGNAL IN</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="contact-hero">
+
+    <div class="hero-content">
+      <h1 class="hero-title">CONTACT VAULTECHO</h1>
+      <p class="hero-subtitle">Your safety is our priority. Reach out to our team anytime for assistance, questions, or
+        emergency support.</p>
+      <div>
+
+        <a href="https://wa.me/1234567890?text=Hello%20Vaultecho%20team,%20I%20need%20assistance%20with..."
+          class="hero-cta ">
+          <i class="fab fa-whatsapp"></i> Send a Message
+        </a>
+        <a href="tel:+1234567890" class="hero-cta" style="background-color: white; color: var(--primary-red);">
+          <i class="fas fa-phone"></i> Emergency Call
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="contact-intro">
+      <h2>We're Here to Help</h2>
+      <p>At Safety Awareness, we're committed to providing you with the resources and information you need to stay safe
+        in all aspects of life. Whether you have questions about safety protocols, want to report a concern, or need
+        guidance on emergency preparedness, our team is ready to assist you.</p>
+      <p>Please use the contact methods below to reach out to us. For immediate emergencies, please refer to our
+        emergency contacts section at the bottom of this page.</p>
+    </section>
+
+    <section class="contact-methods">
+      <div class="contact-card">
+        <h3>General Inquiries</h3>
+        <p><i>📧</i> Email: info@vaultecho.org</p>
+        <p><i>📞</i> Phone: +1 (800) 555-SAFE</p>
+        <p><i>🕒</i> Available 24/7</p>
+      </div>
+
+      <div class="contact-card">
+        <h3>Safety Concerns</h3>
+        <p><i>🚨</i> Report a safety issue: reports@vaultecho.org</p>
+        <p><i>🔒</i> Confidential tip line: +1 (800) 555-TIPS</p>
+        <p><i>🕒</i> Available 24/7</p>
+      </div>
+
+      <div class="contact-card">
+        <h3>Any Suggestions ?</h3>
+        <p><i>🎓</i> Training inquiries: training@vaultecho.org</p>
+        <p><i>📚</i> Resource requests: resources@vaultecho.org</p>
+        <p><i>🕒</i> Available 24/7</p>
+      </div>
+    </section>
+
+    <section class="contact-form-container">
+      <h2>Send Us a Message</h2>
+      <p>Fill out the form below and our team will get back to you as soon as possible.</p>
+
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">Full Name*</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address*</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject*</label>
+          <select id="subject" name="subject" required>
+            <option value="">Select a subject</option>
+            <option value="general">General Inquiry</option>
+            <option value="safety-concern">Safety Concern</option>
+            <option value="training">Training Information</option>
+            <option value="resources">Safety Resources</option>
+            <option value="feedback">Website Feedback</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Your Message*</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <button type="submit">Send Message</button>
+
+        <div id="formSuccess" class="form-success">
+          <h3>Thank You!</h3>
+          <p>Your message has been received. We'll respond as soon as possible.</p>
+        </div>
+      </form>
+    </section>
+
+    <section class="faq-section">
+      <h2>VAULTECHO FAQS & SURVIVAL TIPS</h2>
+      <p>Find answers to common questions about our safety platform and essential survival guidance.</p>
+
+      <div class="faq-container">
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How does VaultEcho enhance my personal safety?</h3>
+            <div class="icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>VaultEcho provides a comprehensive safety ecosystem including:</p>
+            <ul>
+              <li>Real-time emergency alerts through EchoAlert system</li>
+              <li>Curated survival guides in our VaultKit</li>
+              <li>Community-verified safety locations</li>
+              <li>24/7 monitoring of potential threats in your area</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What survival essentials should I always have prepared?</h3>
+            <div class="icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>Based on our VaultKit recommendations:</p>
+            <ul>
+              <li><strong>Basic Kit:</strong> Water, non-perishable food, first aid supplies, flashlight</li>
+              <li><strong>Documents:</strong> Copies of IDs, emergency contacts, medical information</li>
+              <li><strong>Tools:</strong> Multi-tool, portable charger, emergency whistle</li>
+              <li><strong>Custom:</strong> Medications, baby/pet supplies if applicable</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How can I contribute safety information to VaultEcho?</h3>
+            <div class="icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>Our community thrives on shared knowledge:</p>
+            <ul>
+              <li>Submit safety tips through our mobile app</li>
+              <li>Verify locations in our Safety Map</li>
+              <li>Participate in community forums</li>
+              <li>Report potential threats via the emergency contact system</li>
+            </ul>
+            <p>All submissions are reviewed by our safety experts before publication.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What makes VaultEcho different from other safety apps?</h3>
+            <div class="icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>VaultEcho stands out through:</p>
+            <ul>
+              <li><strong>AI-Powered Threat Detection:</strong> Our system analyzes multiple data streams to predict
+                potential dangers</li>
+              <li><strong>Verified Community Network:</strong> All safety information is cross-checked</li>
+              <li><strong>Comprehensive Training:</strong> Regular survival webinars and drills</li>
+              <li><strong>Integrated Ecosystem:</strong> Combines alerts, resources and community in one platform</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What are the top 3 survival tips for urban emergencies?</h3>
+            <div class="icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>From our survival experts:</p>
+            <ol>
+              <li><strong>Know Your Exits:</strong> Always identify at least two escape routes in any building</li>
+              <li><strong>Water First:</strong> You can survive weeks without food but only days without water</li>
+              <li><strong>Stay Informed:</strong> Use VaultEcho's real-time updates to avoid danger zones</li>
+            </ol>
+            <p>Download our complete Urban Survival Guide from the Resources section.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+
+
+
+
+
+
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo-column">
+        <div class="logo-container">
+          <a href="index.html"><img src="Vaultecho-1.png" alt="VaultEcho" class="footer-logo"></a>
+        </div>
+        <p class="footer-tagline">Turning silence into signal. Protecting human lives through intelligent emergency
+          response.</p>
+        <div class="footer-newsletter">
+          <h4>Stay Updated</h4>
+          <form class="newsletter-form">
+            <input type="email" name="email" placeholder="Your email address" required>
+            <button type="submit" class="newsletter-btn">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h3>Navigation</h3>
+        <ul class="footer-links">
+          <li><a href="index.html"><span class="link-icon">→</span><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="about.html"><span class="link-icon">→</span><i class="fas fa-info-circle"></i> About Us</a></li>
+          <li><a href="Contact.html"><span class="link-icon">→</span><i class="fas fa-envelope"></i> Contact</a></li>
+          <li><a href="community.html"><span class="link-icon">→</span><i class="fas fa-users"></i> Community</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Essential Tools</h3>
+        <ul class="footer-links">
+          <li><a href="echoalert.html"><span class="link-icon">→</span><i class="fas fa-bell"></i> EchoAlert</a></li>
+          <li><a href="#"><span class="link-icon">→</span><i class="fas fa-box-open"></i> Vaultkit</a></li>
+          <li><a href="emergency.html"><span class="link-icon">→</span><i class="fas fa-tools"></i> Emergency
+              Toolkit</a></li>
+          <li><a href="survival.html"><span class="link-icon">→</span><i class="fas fa-lightbulb"></i> Survival Tip</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div class="contact-text">
+              123 Safety Avenue<br>
+              Emergency City, EC 12345
+            </div>
+          </div><br>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <div class="contact-text">
+              <a href="tel:+18005551234">+1 (800) 555-1234</a><br>
+              <a href="tel:+18005554321">+1 (800) 555-4321</a>
+            </div>
+          </div><br>
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <div class="contact-text">
+              <a href="mailto:support@vaultecho.com">support@vaultecho.com</a><br>
+              <a href="mailto:emergency@vaultecho.com">emergency@vaultecho.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copyright">
+        &copy; 2025 AUTECHO. All rights reserved. <span class="footer-legal-links">
+          <a href="#"><i class="fas fa-lock"></i> Privacy Policy</a> |
+          <a href="#"><i class="fas fa-file-contract"></i> Terms</a> |
+          <a href="#"><i class="fas fa-cookie-bite"></i> Cookies</a>
+        </span>
+      </div>
+      <div class="footer-social">
+        <a href="https://twitter.com/autecho" class="social-icon" aria-label="Twitter" target="_blank"
+          rel="noopener noreferrer">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://facebook.com/autecho" class="social-icon" aria-label="Facebook" target="_blank"
+          rel="noopener noreferrer">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://instagram.com/autecho" class="social-icon" aria-label="Instagram" target="_blank"
+          rel="noopener noreferrer">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://linkedin.com/company/autecho" class="social-icon" aria-label="LinkedIn" target="_blank"
+          rel="noopener noreferrer">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://youtube.com/autecho" class="social-icon" aria-label="YouTube" target="_blank"
+          rel="noopener noreferrer">
+          <i class="fab fa-youtube"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const contactForm = document.getElementById('contactForm');
+      const formSuccess = document.getElementById('formSuccess');
+
+
+      initScrollAnimations();
+
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+
+        const formData = {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          subject: document.getElementById('subject').value,
+          message: document.getElementById('message').value,
+          timestamp: new Date().toISOString()
+        };
+
+
+        saveContactFormData(formData);
+
+
+        formSuccess.style.display = 'block';
+        formSuccess.style.animation = 'fadeIn 0.6s ease-out';
+        contactForm.reset();
+
+
+        formSuccess.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      });
+
+      function saveContactFormData(data) {
+        let contacts = JSON.parse(localStorage.getItem('contactSubmissions')) || [];
+        contacts.push(data);
+        localStorage.setItem('contactSubmissions', JSON.stringify(contacts));
+      }
+
+      function initScrollAnimations() {
+
+        window.addEventListener('scroll', checkScroll);
+
+        checkScroll();
+      }
+
+      function checkScroll() {
+        const elements = document.querySelectorAll('.animate');
+        const windowHeight = window.innerHeight;
+
+        elements.forEach(element => {
+          const elementPos = element.getBoundingClientRect().top;
+          const elementVisible = 150;
+
+          if (elementPos < windowHeight - elementVisible) {
+            element.style.animation = element.dataset.animation + ' 0.8s ease-out forwards';
+            element.style.animationDelay = element.dataset.delay || '0s';
+          }
+        });
+      }
+    });
+  </script>
+
+  <script>
+
+    function formatWhatsAppNumber() {
+      const whatsappBtn = document.querySelector('.hero-cta.whatsapp');
+
+      const whatsappNumber = '1234567890';
+      const defaultMessage = encodeURIComponent("Hello Vaultecho team, I need assistance with...");
+      whatsappBtn.href = `https://wa.me/${whatsappNumber}?text=${defaultMessage}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', formatWhatsAppNumber);
+  </script>
+
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+          item.classList.toggle('active');
+
+
+          faqItems.forEach(otherItem => {
+            if (otherItem !== item && otherItem.classList.contains('active')) {
+              otherItem.classList.remove('active');
+            }
+          });
+        });
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdown = document.getElementById('vaultkitDropdown');
+
+
+      hamburger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+
+
+      if (dropdownToggle) {
+        dropdownToggle.addEventListener('click', function (e) {
+          if (window.innerWidth <= 992) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+          }
+        });
+      }
+
+
+      document.addEventListener('click', function (e) {
+        if (window.innerWidth <= 992) {
+          if (!e.target.closest('.navbar') && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+          }
+          if (!e.target.closest('.dropdown') && dropdown.classList.contains('active')) {
+            dropdown.classList.remove('active');
+          }
+        }
+      });
+
+
+      const dropdownItems = document.querySelectorAll('.dropdown-content a');
+      dropdownItems.forEach(item => {
+        item.addEventListener('click', function () {
+          if (window.innerWidth <= 992) {
+            dropdown.classList.remove('active');
+          }
+        });
+      });
+    });
+
+
+    window.addEventListener('resize', function () {
+      const navLinks = document.getElementById('navLinks');
+      const dropdown = document.getElementById('vaultkitDropdown');
+      const hamburger = document.getElementById('hamburger');
+
+      if (window.innerWidth > 992) {
+        navLinks.classList.remove('active');
+        dropdown.classList.remove('active');
+        hamburger.classList.remove('active');
+      }
+    });
+  </script>
+
+  <script src="Jquery Validation/dist/jquery.validate.min.js"></script>
+  <script>
+    $(document).ready(function () {
+
+      $(".newsletter-form").validate({
+        rules: {
+          email: {
+            required: true,
+            email: true
+          }
+        },
+        messages: {
+          email: {
+            required: "Please enter your email address",
+            email: "Please enter a valid email address"
+          }
+        },
+        errorElement: "div",
+        errorClass: "invalid-feedback",
+        highlight: function (element, errorClass) {
+          $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function (element, errorClass) {
+          $(element).addClass("is-valid").removeClass("is-invalid");
+        },
+        submitHandler: function (form) {
+
+          alert("Thank you for subscribing!");
+          form.reset();
+          return false;
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

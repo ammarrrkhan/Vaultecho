@@ -1,0 +1,9 @@
+Logo Color:
+
+🧩 Usage Recommendations
+Element	Recommended Color(s)	Notes
+Background (dark)	#000000, #121212	Use gradients for depth
+Brand / Title Text	#ffffff	High contrast, bold presence
+Accent Elements	#d62839, #911d2a	Buttons, icons, badges, hovers
+Icons / Signals	#d62839 + transparent layers	Use animation/pulse for interaction
+CTA Buttons	#d62839 with hover #911d2a	Adds urgency and click encouragement

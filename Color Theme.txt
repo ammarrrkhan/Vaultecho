@@ -1,0 +1,82 @@
+🔹 THEME NAME: Vaultecho 
+
+🎯 DESIGN GOAL:
+A dark-mode, security-focused, modern tech UI with cyber alert highlights using red accents and glowing interactions.
+
+━━━━━━━━━━━━━━━━━━━━
+🎨 COLORS (CSS Variables in :root):
+━━━━━━━━━━━━━━━━━━━━
+--primary-red: #d62839;         // Main alert color, hover effects
+--dark-red: #911d2a;            // Deeper red for active/selected states
+--accent-color: #e63946;        // Soft red, warnings, alerts
+--pure-black: #000000;          // Background base for quiz & VIP sections
+--dark-gray: #121212;           // Body background
+--medium-gray: #1d1d1d;         // Card backgrounds
+--light-gray: #2a2a2a;          // Quiz/section dividers
+--white: #FFFFFF;               // Primary text
+--off-white: #f1f1f1;           // Subtext / soft labels
+--light-color: #f1faee;         // Success bg or positive contrast
+--dark-blue: #1d3557;           // Optional dark color (used in older components)
+
+━━━━━━━━━━━━━━━━━━━━
+🔤 TYPOGRAPHY:
+━━━━━━━━━━━━━━━━━━━━
+Headings & Logo:  'Orbitron', sans-serif;   // Futuristic, bold
+Body Text:        'Poppins', sans-serif;     // Clean, readable
+(Optional):       'Rajdhani', sans-serif;    // Not actively used
+
+━━━━━━━━━━━━━━━━━━━━
+🧩 UI COMPONENTS STYLING:
+━━━━━━━━━━━━━━━━━━━━
+✅ Navbar:
+- Transparent at top, sticky dark on scroll
+- Hover underline animation
+- Dropdown menu opens on hover
+- Font-weight: 800; Letter-spacing: 0.5px
+
+✅ Hero Section:
+- Full screen with background image and dark overlay
+- Large title with shadow
+- Call-to-action buttons (red and white)
+- Button hover: scale + shadow
+
+✅ Feature Cards:
+- Dark cards with red hover glow
+- Rounded, modern design
+- Icons animate on hover
+
+✅ Safety Meter:
+- Styled Bootstrap progress bar
+- Red fill + rounded ends
+
+✅ Stats Section:
+- Large animated numbers
+- Hover glow effects
+- Highlighted titles
+
+✅ VIP Quiz Box:
+- Centered, rounded, neon-style glow
+- Option selection with red pulses
+- Result box with gradient icon badge
+
+━━━━━━━━━━━━━━━━━━━━
+📱 RESPONSIVENESS:
+━━━━━━━━━━━━━━━━━━━━
+- Fully mobile optimized with breakpoints:
+  - <992px: collapsed navbar, font resize
+  - <768px: hero shrink, stats stack vertical
+  - <576px: font downscale, button full-width
+
+━━━━━━━━━━━━━━━━━━━━
+🔧 DEVELOPMENT TIPS:
+━━━━━━━━━━━━━━━━━━━━
+- Always use `var(--primary-red)` or `var(--dark-gray)` for consistency
+- Animate using `fadeIn`, `wordRise`, `scale`, or `translateY`
+- Prefer `.feature-card`, `.alert-card`, `.btn-hero` classes for reusability
+- Maintain spacing using Bootstrap grids or `padding: 80px 0;`
+
+━━━━━━━━━━━━━━━━━━━━
+🌐 FAVICON / META SUGGESTION:
+━━━━━━━━━━━━━━━━━━━━
+- Favicon should use red + black logo combo
+- Meta color theme: `<meta name="theme-color" content="#121212">`
